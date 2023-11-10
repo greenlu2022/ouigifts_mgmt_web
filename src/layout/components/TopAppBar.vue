@@ -5,7 +5,7 @@ console.log(api)
 
 <template>
 
-  <VAppBar class="my-3 mx-6 rounded-lg app-bar-width">
+  <VAppBar class="my-8 mx-8 rounded-lg app-bar-width">
     <!--    <template v-slot:image>-->
     <!--      <VImg-->
     <!--          gradient="to top right, rgba(19,84,122,.8), rgba(128,208,199,.8)"-->
@@ -13,28 +13,28 @@ console.log(api)
     <!--    </template>-->
 
     <template v-slot:prepend>
-      <VAppBarNavIcon></VAppBarNavIcon>
+      <VAppBarNavIcon color="white"></VAppBarNavIcon>
     </template>
 
-    <VAppBarTitle class="left">App</VAppBarTitle>
+    <VAppBarTitle class="text-left">App</VAppBarTitle>
 
     <VSpacer></VSpacer>
 
     <VBtn icon>
-      <VIcon>mdi-magnify</VIcon>
+      <VIcon color="white">mdi-magnify</VIcon>
     </VBtn>
 
     <VBtn icon>
-      <VIcon>mdi-heart</VIcon>
+      <VIcon color="white">mdi-heart</VIcon>
     </VBtn>
     <VBtn icon>
-      <VIcon>mdi-dots-vertical</VIcon>
+      <VIcon color="white">mdi-dots-vertical</VIcon>
     </VBtn>
   </VAppBar>
 </template>
 
 <style scoped>
 .app-bar-width {
-  max-width: calc((100% - 256px) - 48px);
+  max-width: calc((100% - 256px) - 64px);
 }
 </style>
