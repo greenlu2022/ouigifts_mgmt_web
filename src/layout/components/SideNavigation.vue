@@ -5,19 +5,14 @@ import logo from '../../assets/logo_light.svg?raw'
 <template>
   <VNavigationDrawer>
     <template v-slot:prepend>
-      <RouterLink
-          to="/"
+      <div
           class="pa-8 d-flex align-center gap-x-3 app-title-wrapper text-decoration-none"
       >
-        <div
-            class="d-flex"
-            v-html="logo"
-        />
-
+        <div class="d-flex" v-html="logo"/>
         <h3 class="text-white w-100">
           OUI Admin
         </h3>
-      </RouterLink>
+      </div>
     </template>
 
     <VList class="pl-4">
