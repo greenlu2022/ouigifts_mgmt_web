@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {useBannerStore} from "../stores/banner.ts";
+import BannerEditModal from "../components/BannerEditModal.vue"
 
 const store = useBannerStore()
 store.getBanners()
@@ -72,9 +73,7 @@ store.getBanners()
         {{ item.endTime }}
       </td>
       <td class="text-center">
-        <VBtn icon color="transparent" variant="flat">
-          <VIcon color="white">mdi-pencil</VIcon>
-        </VBtn>
+        <BannerEditModal></BannerEditModal>
       </td>
     </tr>
     </tbody>
