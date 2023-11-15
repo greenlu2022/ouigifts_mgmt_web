@@ -1,11 +1,10 @@
 import {defineStore} from 'pinia'
 
-
 type Banner = {
-    id: string,
+    id: number,
     name: string,
-    imageUlr: string,
-    directUlr: string,
+    imageUrl: string,
+    directUrl: string,
     actionType: string,
     startTime: string,
     endTime: string
@@ -16,13 +15,13 @@ export const useBannerStore = defineStore('banner', {
     state: (): { banners: any[] } => ({banners: []}),
     getters: {},
     actions: {
-        getBanners(): Banner[] {
-            const apiBanners = [
+        getBanners() {
+            const apiBanners: Banner[] = [
                 {
                     id: 1,
                     name: 'Daoori',
                     imageUrl: 'https://cdn.vuetifyjs.com/images/parallax/material.jpg',
-                    directUrl: 6,
+                    directUrl: '',
                     actionType: 'inner route',
                     startTime: '2023-12-31',
                     endTime: '2024-12-31',
@@ -32,7 +31,7 @@ export const useBannerStore = defineStore('banner', {
                     id: 2,
                     name: 'Apple',
                     imageUrl: 'https://cdn.vuetifyjs.com/images/parallax/material.jpg',
-                    directUrl: 6,
+                    directUrl: '',
                     actionType: 'inner route',
                     startTime: '2023-12-31',
                     endTime: '2024-12-31',
@@ -42,7 +41,7 @@ export const useBannerStore = defineStore('banner', {
                     id: 3,
                     name: 'Google',
                     imageUrl: 'https://cdn.vuetifyjs.com/images/parallax/material.jpg',
-                    directUrl: 6,
+                    directUrl: '',
                     actionType: 'inner route',
                     startTime: '2023-12-31',
                     endTime: '2024-12-31',
@@ -52,7 +51,9 @@ export const useBannerStore = defineStore('banner', {
             if (this.banners.length > 0) {
                 this.clearBanners()
             }
-            apiBanners.forEach(banner => this.addBanner(banner))
+            apiBanners.forEach(banner => {
+                this.addBanner(banner)
+            })
         },
         addBanner(banner: Banner) {
             this.banners.push(banner)
