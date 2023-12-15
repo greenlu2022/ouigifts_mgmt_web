@@ -5,7 +5,7 @@ console.log(api)
 
 <template>
 
-  <VAppBar class="my-8 mx-8 rounded-lg app-bar-width">
+  <VAppBar scroll-behavior="hide" scroll-threshold="40" class="my-8 mx-8 rounded-lg app-bar-width">
     <!--    <template v-slot:image>-->
     <!--      <VImg-->
     <!--          gradient="to top right, rgba(19,84,122,.8), rgba(128,208,199,.8)"-->
