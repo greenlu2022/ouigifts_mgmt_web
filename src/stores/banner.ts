@@ -1,18 +1,8 @@
 import {defineStore} from 'pinia'
-
-type Banner = {
-    id: number,
-    name: string,
-    imageUrl: string,
-    directUrl: string,
-    actionType: string,
-    startTime: string,
-    endTime: string
-    isActive: boolean,
-};
+import type Banner from "../types/Banner.ts";
 
 export const useBannerStore = defineStore('banner', {
-    state: (): { banners: any[] } => ({banners: []}),
+    state: (): { banners: Banner[] } => ({banners: []}),
     getters: {},
     actions: {
         getBanners() {
@@ -21,7 +11,7 @@ export const useBannerStore = defineStore('banner', {
                     id: 1,
                     name: 'Daoori',
                     imageUrl: 'https://cdn.vuetifyjs.com/images/parallax/material.jpg',
-                    directUrl: '',
+                    directUrl: 'https://daoori.com/',
                     actionType: 'inner route',
                     startTime: '2023-12-31',
                     endTime: '2024-12-31',
@@ -31,7 +21,7 @@ export const useBannerStore = defineStore('banner', {
                     id: 2,
                     name: 'Apple',
                     imageUrl: 'https://cdn.vuetifyjs.com/images/parallax/material.jpg',
-                    directUrl: '',
+                    directUrl: 'https://daoori.com/',
                     actionType: 'inner route',
                     startTime: '2023-12-31',
                     endTime: '2024-12-31',
@@ -41,7 +31,37 @@ export const useBannerStore = defineStore('banner', {
                     id: 3,
                     name: 'Google',
                     imageUrl: 'https://cdn.vuetifyjs.com/images/parallax/material.jpg',
-                    directUrl: '',
+                    directUrl: 'https://daoori.com/',
+                    actionType: 'inner route',
+                    startTime: '2023-12-31',
+                    endTime: '2024-12-31',
+                    isActive: true,
+                },
+                {
+                    id: 4,
+                    name: 'Google',
+                    imageUrl: 'https://cdn.vuetifyjs.com/images/parallax/material.jpg',
+                    directUrl: 'https://daoori.com/',
+                    actionType: 'inner route',
+                    startTime: '2023-12-31',
+                    endTime: '2024-12-31',
+                    isActive: true,
+                },
+                {
+                    id: 5,
+                    name: 'Google',
+                    imageUrl: 'https://cdn.vuetifyjs.com/images/parallax/material.jpg',
+                    directUrl: 'https://daoori.com/',
+                    actionType: 'inner route',
+                    startTime: '2023-12-31',
+                    endTime: '2024-12-31',
+                    isActive: true,
+                },
+                {
+                    id: 6,
+                    name: 'Google',
+                    imageUrl: 'https://cdn.vuetifyjs.com/images/parallax/material.jpg',
+                    directUrl: 'https://daoori.com/',
                     actionType: 'inner route',
                     startTime: '2023-12-31',
                     endTime: '2024-12-31',
@@ -57,6 +77,14 @@ export const useBannerStore = defineStore('banner', {
         },
         addBanner(banner: Banner) {
             this.banners.push(banner)
+        },
+        updateBanner(banner: Banner): void {
+            const bannerIndex = this.banners.findIndex(item => item.id == banner.id)
+            this.banners.splice(bannerIndex, 1, banner)
+        },
+        removeBanner(banner: Banner): void {
+            const bannerIndex = this.banners.findIndex(item => item.id == banner.id)
+            this.banners.splice(bannerIndex, 1)
         },
         clearBanners() {
             this.banners = []

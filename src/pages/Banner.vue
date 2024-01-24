@@ -1,15 +1,21 @@
 <script setup lang="ts">
-import {useBannerStore} from "../stores/banner.ts";
+import {useBannerStore} from "../stores/banner.ts"
 import BannerEditModal from "../components/BannerEditModal.vue"
+import Banner from "../types/Banner.ts";
 
 const store = useBannerStore()
 store.getBanners()
+
+const onConfirm = (banner: Banner) => {
+  console.log("confirm emitted", banner)
+  store.updateBanner(banner)
+}
 
 
 </script>
 
 <template>
-  <VTable class="rounded-lg w-100 mt-9" hover fixed-header height="800px">
+  <VTable class="rounded-lg w-100 mt-9" fixed-header height="800px">
     <thead>
     <tr>
       <th class="text-uppercase text-center">
@@ -56,7 +62,7 @@ store.getBanners()
       <td class="text-center">
         <v-tooltip :text="item.directUrl" location="bottom">
           <template v-slot:activator="{ props }">
-            <VBtn icon v-bind="props" color="transparent" variant="flat" href="http://google.com">
+            <VBtn icon v-bind="props" color="transparent" variant="flat" href="http://google.com" target="_blank">
               <VIcon color="white">mdi-link-variant</VIcon>
             </VBtn>
           </template>
@@ -73,7 +79,7 @@ store.getBanners()
         {{ item.endTime }}
       </td>
       <td class="text-center">
-        <BannerEditModal></BannerEditModal>
+        <BannerEditModal :banner="item" @@confirm="onConfirm"></BannerEditModal>
       </td>
     </tr>
     </tbody>
