@@ -1,14 +1,23 @@
 <script setup lang="ts">
 import {useBannerStore} from "../stores/banner.ts"
-import BannerEditModal from "../components/BannerEditModal.vue"
-import Banner from "../types/Banner.ts";
+import ActionMenu from "../components/ActionMenu.vue";
+import Banner from "@/types/Banner.ts";
 
 const store = useBannerStore()
 store.getBanners()
 
-const onConfirm = (banner: Banner) => {
+const handleEditConfirm = (banner: Banner) => {
   console.log("confirm emitted", banner)
   store.updateBanner(banner)
+}
+
+const handleDelete = (bannerId: number) => {
+  console.log("delete emitted", bannerId)
+  store.removeBanner(bannerId)
+}
+
+const twoLine = (dateTime: string): string => {
+  return dateTime.replace(" ", "<br/>")
 }
 
 
@@ -37,7 +46,10 @@ const onConfirm = (banner: Banner) => {
         End Time
       </th>
       <th class="text-uppercase text-center">
-        Edit
+        Active
+      </th>
+      <th class="text-uppercase text-center">
+        More
       </th>
     </tr>
     </thead>
@@ -62,30 +74,42 @@ const onConfirm = (banner: Banner) => {
       <td class="text-center">
         <v-tooltip :text="item.directUrl" location="bottom">
           <template v-slot:activator="{ props }">
-            <VBtn icon v-bind="props" color="transparent" variant="flat" href="http://google.com" target="_blank">
+            <VBtn icon v-bind="props" color="transparent" variant="flat" :href="item.directUrl" target="_blank">
               <VIcon color="white">mdi-link-variant</VIcon>
             </VBtn>
           </template>
         </v-tooltip>
-
       </td>
       <td class="text-center">
         {{ item.actionType }}
       </td>
       <td class="text-center">
-        {{ item.startTime }}
+        <span v-html="twoLine(item.startTime)"></span>
       </td>
       <td class="text-center">
-        {{ item.endTime }}
+        <span v-html="twoLine(item.endTime)"></span>
       </td>
-      <td class="text-center">
-        <BannerEditModal :banner="item" @@confirm="onConfirm"></BannerEditModal>
+      <td class="center">
+        <VSwitch class="justify-center" v-model="item.isActive"></VSwitch>
+      </td>
+      <td>
+        <ActionMenu :banner="item" @@edit="handleEditConfirm" @@delete="handleDelete"></ActionMenu>
       </td>
     </tr>
     </tbody>
   </VTable>
+  <VBtn icon
+        color="green"
+        class="position-fixed"
+        style="bottom:30px; right:30px"
+  >
+    <VIcon color="white">mdi-plus</VIcon>
+  </VBtn>
+
 </template>
 
 <style scoped>
-
+:deep(.v-selection-control) {
+  justify-content: center;
+}
 </style>

@@ -4,10 +4,10 @@ import {DateTime} from 'luxon'
 // @ts-ignore
 import {TimePicker} from 'vue-material-time-picker'
 import "vue-material-time-picker/dist/style.css"
-import DateTimeField from "../types/DateTimeField.ts";
+import DateTimeField from "@/types/DateTimeField";
 
 const fieldProps = defineProps<DateTimeField>()
-const emit = defineEmits(['@update'])
+const model = defineModel()
 
 const date = ref()
 const time = ref("00:00")
@@ -20,17 +20,17 @@ const dateTimeFormatted = computed(() => {
     const fullFormattedDateTime = `${formattedDate} ${time.value}`
     return fullFormattedDateTime
   } else {
-    return fieldProps.modelValue
+    return model.value
   }
 })
 
 
 watch(dateTimeFormatted, (newDateTimeFormatted) => {
-  emit('@update', newDateTimeFormatted)
+  model.value = newDateTimeFormatted
 })
 
-watch(time, (newTime) => {
-  console.log("newTime", newTime)
+watch(date, () => {
+  tab.value = "time"
 })
 
 // watch(dateTimeDialogState, (newDateTimeDialogState) => {
