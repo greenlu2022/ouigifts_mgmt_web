@@ -2,7 +2,9 @@ import {defineStore} from 'pinia'
 import type Banner from "../types/Banner.ts";
 
 export const useBannerStore = defineStore('banner', {
-    state: (): { banners: Banner[] } => ({banners: []}),
+    state: (): {
+        banners: Banner[]
+    } => ({banners: []}),
     getters: {},
     actions: {
         getBanners() {
@@ -13,8 +15,8 @@ export const useBannerStore = defineStore('banner', {
                     imageUrl: 'https://cdn.vuetifyjs.com/images/parallax/material.jpg',
                     directUrl: 'https://daoori.com/',
                     actionType: 'inner route',
-                    startTime: '2023-12-31',
-                    endTime: '2024-12-31',
+                    startTime: '2023-12-31 00:00:00',
+                    endTime: '2024-12-31 23:59:59',
                     isActive: true,
                 },
                 {
@@ -82,8 +84,8 @@ export const useBannerStore = defineStore('banner', {
             const bannerIndex = this.banners.findIndex(item => item.id == banner.id)
             this.banners.splice(bannerIndex, 1, banner)
         },
-        removeBanner(banner: Banner): void {
-            const bannerIndex = this.banners.findIndex(item => item.id == banner.id)
+        removeBanner(bannerId: number): void {
+            const bannerIndex = this.banners.findIndex(item => item.id == bannerId)
             this.banners.splice(bannerIndex, 1)
         },
         clearBanners() {
