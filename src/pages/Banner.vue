@@ -1,14 +1,20 @@
 <script setup lang="ts">
 import {useBannerStore} from "../stores/banner.ts"
-import ActionMenu from "../components/ActionMenu.vue";
+import ActionMenu from "@/components/ActionMenu.vue";
 import Banner from "@/types/Banner.ts";
+import BannerAddDialog from "@/components/BannerAddDialog.vue";
 
 const store = useBannerStore()
 store.getBanners()
 
 const handleEditConfirm = (banner: Banner) => {
-  console.log("confirm emitted", banner)
+  console.log("edit confirm emitted", banner)
   store.updateBanner(banner)
+}
+
+const handleAddConfirm = (banner: Banner) => {
+  console.log("add confirm emitted", banner)
+  store.addBannerUnshift(banner)
 }
 
 const handleDelete = (bannerId: number) => {
@@ -98,13 +104,7 @@ const twoLine = (dateTime: string): string => {
     </tr>
     </tbody>
   </VTable>
-  <VBtn icon
-        color="green"
-        class="position-fixed"
-        style="bottom:30px; right:30px"
-  >
-    <VIcon color="white">mdi-plus</VIcon>
-  </VBtn>
+  <BannerAddDialog @@confirm="handleAddConfirm"></BannerAddDialog>
 
 </template>
 

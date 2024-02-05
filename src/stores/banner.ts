@@ -80,6 +80,9 @@ export const useBannerStore = defineStore('banner', {
         addBanner(banner: Banner) {
             this.banners.push(banner)
         },
+        addBannerUnshift(banner: Banner) {
+            this.banners.unshift(banner)
+        },
         updateBanner(banner: Banner): void {
             const bannerIndex = this.banners.findIndex(item => item.id == banner.id)
             this.banners.splice(bannerIndex, 1, banner)

@@ -1,28 +1,22 @@
 <script setup lang="ts">
-import {ref} from 'vue'
-import DateTimePickField from "./DateTimePickField.vue"
-import type Banner from "@/types/Banner.ts"
+import {ref} from "vue";
+import DateTimePickField from "@/components/DateTimePickField.vue";
+import Banner from "@/types/Banner.ts";
 
-
-const outerProps = defineProps<{
-  banner: Banner
-}>()
+const dialog = ref(false)
+const refInputEl = ref<HTMLElement>()
+const bannerDataLocal = ref<Banner>({
+  imageUrl: "https://cdn.vuetifyjs.com/images/parallax/material.jpg"
+})
 
 const emit = defineEmits<{
   (e: '@confirm', banner: Banner): void,
 }>()
 
-
-const dialog = ref(false)
-const refInputEl = ref<HTMLElement>()
-
-const bannerDataLocal = ref<Banner>({...outerProps.banner})
-
 const handleConfirm = () => {
   emit("@confirm", bannerDataLocal.value)
   dialog.value = false
 }
-
 
 // changeAvatar function
 const changeAvatar = (file: Event) => {
@@ -38,7 +32,6 @@ const changeAvatar = (file: Event) => {
     }
   }
 }
-
 </script>
 
 <template>
@@ -48,10 +41,13 @@ const changeAvatar = (file: Event) => {
       width="600"
   >
     <template v-slot:activator="{ props }">
-      <div v-bind="props" class="w-100">
-        <VIcon color="white">mdi-pencil</VIcon>
-        <span class="px-3">Edit</span>
-      </div>
+      <VBtn icon
+            color="green"
+            class="position-fixed"
+            style="bottom:30px; right:30px"
+            v-bind="props">
+        <VIcon color="white">mdi-plus</VIcon>
+      </VBtn>
     </template>
     <VCard class="pa-3">
       <VCardTitle class="text-h5">
@@ -108,6 +104,9 @@ const changeAvatar = (file: Event) => {
               v-model="bannerDataLocal.directUrl"
           ></VTextField>
         </VCol>
+        <!--          <VCol cols="12" sm="6">-->
+        <!--            <VueDatePicker v-model="date" position="center"></VueDatePicker>-->
+        <!--          </VCol>-->
         <VCol cols="12" sm="6">
           <DateTimePickField label="Start Date" v-model="bannerDataLocal.startTime"></DateTimePickField>
         </VCol>
