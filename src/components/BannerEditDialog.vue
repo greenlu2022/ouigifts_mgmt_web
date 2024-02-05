@@ -76,13 +76,13 @@ const changeAvatar = (file: Event) => {
               ref="refInputEl"
               type="file"
               name="file"
-              accept=".jpeg,.png,.jpg,GIF,.webp"
+              accept=".jpeg,.png,.jpg,GIF,.webp,.svg"
               hidden
               @input="changeAvatar"
           >
           <VSpacer></VSpacer>
           <div class="text-body-1 mt-3">
-            Allowed JPG, GIF, PNG or WEBP . Max size of 800K
+            Allowed JPG, GIF, PNG, SVG or WEBP . Max size of 800K
           </div>
         </VCol>
         <VCol cols="12" sm="6">
@@ -93,12 +93,12 @@ const changeAvatar = (file: Event) => {
           ></VTextField>
         </VCol>
         <VCol cols="12" sm="6">
-          <v-select
+          <VSelect
               label="Action Type"
               :items="['None', 'Inner Route', 'Outer Route']"
               variant="outlined"
               v-model="bannerDataLocal.actionType"
-          ></v-select>
+          ></VSelect>
         </VCol>
         <VCol cols="12" sm="6">
           <VTextField
