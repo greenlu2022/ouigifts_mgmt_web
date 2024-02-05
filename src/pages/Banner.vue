@@ -96,7 +96,7 @@ const twoLine = (dateTime: string): string => {
         <span v-html="twoLine(item.endTime)"></span>
       </td>
       <td class="center">
-        <VSwitch class="justify-center" v-model="item.isActive"></VSwitch>
+        <VSwitch class="justify-center" v-model="item.isActive" @change="handleEditConfirm(item)"></VSwitch>
       </td>
       <td>
         <ActionMenu :banner="item" @@edit="handleEditConfirm" @@delete="handleDelete"></ActionMenu>
