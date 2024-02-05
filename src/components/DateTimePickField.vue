@@ -107,14 +107,6 @@ const closeDialog = () => {
 
 <style scoped>
 .t-datetime-picker {
-  .v-tabs-slider-wrapper {
-    top: 0;
-  }
-
-  .v-picker__title {
-    height: 90px;
-  }
-
   .v-time-picker-title__time * {
     font-size: 60px;
     height: 60px;
@@ -122,14 +114,6 @@ const closeDialog = () => {
 
   :deep(.time-picker-clock__item) {
     color: green;
-  }
-
-  .v-picker__body {
-    height: 290px;
-  }
-
-  .v-tabs-items {
-    height: 380px;
   }
 }
 </style>
