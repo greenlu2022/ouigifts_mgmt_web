@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {useBannerStore} from "../stores/banner.ts"
+import {useBannerStore} from "@/stores/Banner.ts"
 import ActionMenu from "@/components/ActionMenu.vue";
 import Banner from "@/types/Banner.ts";
 import BannerAddDialog from "@/components/BannerAddDialog.vue";
@@ -14,7 +14,7 @@ const handleEditConfirm = (banner: Banner) => {
 
 const handleAddConfirm = (banner: Banner) => {
   console.log("add confirm emitted", banner)
-  store.addBannerUnshift(banner)
+  store.addBanner(banner)
 }
 
 const handleDelete = (bannerId: number) => {
@@ -54,7 +54,7 @@ const twoLine = (dateTime: string): string => {
       <th class="text-uppercase text-center">
         Active
       </th>
-      <th class="text-uppercase text-center">
+      <th class="text-uppercase text-center w140">
         More
       </th>
     </tr>
@@ -96,7 +96,7 @@ const twoLine = (dateTime: string): string => {
         <span v-html="twoLine(item.endTime)"></span>
       </td>
       <td class="center">
-        <VSwitch class="justify-center" v-model="item.isActive" @change="handleEditConfirm(item)"></VSwitch>
+        <VSwitch class="justify-center" v-model="item.isEnabled" @change="handleEditConfirm(item)"></VSwitch>
       </td>
       <td>
         <ActionMenu :banner="item" @@edit="handleEditConfirm" @@delete="handleDelete"></ActionMenu>
@@ -105,7 +105,6 @@ const twoLine = (dateTime: string): string => {
     </tbody>
   </VTable>
   <BannerAddDialog @@confirm="handleAddConfirm"></BannerAddDialog>
-
 </template>
 
 <style scoped>

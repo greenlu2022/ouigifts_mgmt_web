@@ -17,7 +17,7 @@ export const useBannerStore = defineStore('banner', {
                     actionType: 'inner route',
                     startTime: '2023-12-31 00:00:00',
                     endTime: '2024-12-31 23:59:59',
-                    isActive: true,
+                    isEnabled: true,
                 },
                 {
                     id: 2,
@@ -27,7 +27,7 @@ export const useBannerStore = defineStore('banner', {
                     actionType: 'inner route',
                     startTime: '2023-12-31',
                     endTime: '2024-12-31',
-                    isActive: true,
+                    isEnabled: true,
                 },
                 {
                     id: 3,
@@ -37,7 +37,7 @@ export const useBannerStore = defineStore('banner', {
                     actionType: 'inner route',
                     startTime: '2023-12-31',
                     endTime: '2024-12-31',
-                    isActive: true,
+                    isEnabled: true,
                 },
                 {
                     id: 4,
@@ -47,7 +47,7 @@ export const useBannerStore = defineStore('banner', {
                     actionType: 'inner route',
                     startTime: '2023-12-31',
                     endTime: '2024-12-31',
-                    isActive: true,
+                    isEnabled: true,
                 },
                 {
                     id: 5,
@@ -57,7 +57,7 @@ export const useBannerStore = defineStore('banner', {
                     actionType: 'inner route',
                     startTime: '2023-12-31',
                     endTime: '2024-12-31',
-                    isActive: true,
+                    isEnabled: true,
                 },
                 {
                     id: 6,
@@ -67,7 +67,7 @@ export const useBannerStore = defineStore('banner', {
                     actionType: 'inner route',
                     startTime: '2023-12-31',
                     endTime: '2024-12-31',
-                    isActive: true,
+                    isEnabled: true,
                 }
             ]
             if (this.banners.length > 0) {

@@ -6,6 +6,6 @@ export default interface Banner {
     actionType: string
     startTime: string
     endTime: string,
-    isActive: boolean,
+    isEnabled: boolean,
 }
 
