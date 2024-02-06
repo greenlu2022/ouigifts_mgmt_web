@@ -19,11 +19,11 @@ import logo from '../../assets/logo_light.svg?raw'
       <VListItem prepend-icon="mdi-image" value="banner" router to="/banner">
         <VListItemTitle class="text-left">Banner</VListItemTitle>
       </VListItem>
-      <VListItem prepend-icon="mdi-cards" value="coupon" router to="/coupon">
-        <VListItemTitle class="text-left">Coupon</VListItemTitle>
-      </VListItem>
       <VListItem prepend-icon="mdi-view-dashboard" value="category" router to="/category">
         <VListItemTitle class="text-left">Category</VListItemTitle>
+      </VListItem>
+      <VListItem prepend-icon="mdi-cards" value="coupon" router to="/coupon">
+        <VListItemTitle class="text-left">Coupon</VListItemTitle>
       </VListItem>
       <VListItem prepend-icon="mdi-account-box" value="account" router to="/account">
         <VListItemTitle class="text-left">Account</VListItemTitle>
