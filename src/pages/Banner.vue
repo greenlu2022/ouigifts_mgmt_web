@@ -92,10 +92,10 @@ const twoLine = (dateTime: string): string => {
         {{ item.actionType }}
       </td>
       <td class="text-center">
-        <span v-html="twoLine(item.startTime)"></span>
+        <span v-html="twoLine(item.startTime!!)"></span>
       </td>
       <td class="text-center">
-        <span v-html="twoLine(item.endTime)"></span>
+        <span v-html="twoLine(item.endTime!!)"></span>
       </td>
       <td class="center">
         <VSwitch class="justify-center" v-model="item.isEnabled" @change="handleEditConfirm(item)"></VSwitch>
@@ -107,7 +107,7 @@ const twoLine = (dateTime: string): string => {
             <BannerEditDialog :banner="item" @@confirm="handleEditConfirm"></BannerEditDialog>
           </template>
           <template #delete>
-            <DeleteConfirmDialog @@delete="handleDeleteConfirm(item.id)"></DeleteConfirmDialog>
+            <DeleteConfirmDialog @@delete="handleDeleteConfirm(item.id!!)"></DeleteConfirmDialog>
           </template>
         </MoreActionMenu>
       </td>
