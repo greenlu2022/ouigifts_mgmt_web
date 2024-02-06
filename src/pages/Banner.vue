@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {useBannerStore} from "@/stores/Banner.ts"
-import Banner from "@/types/Banner.ts";
+import {useBannerStore} from "@/stores/banner"
+import Banner from "@/types/Banner";
 import BannerAddDialog from "@/components/BannerAddDialog.vue";
 import BannerEditDialog from "@/components/BannerEditDialog.vue";
 import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";

@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import {useCategoryStore} from "@/stores/Category.ts"
-import Category from "@/types/Category.ts";
+import {useCategoryStore} from "@/stores/category"
+import Category from "@/types/Category";
 import MoreActionMenu from "@/components/MoreActionMenu.vue";
 import CategoryEditDialog from "@/components/CategoryEditDialog.vue";
 import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";
+import CategoryAddDialog from "@/components/CategoryAddDialog.vue";
 
 const store = useCategoryStore()
 store.getCatefories()
@@ -14,6 +15,11 @@ const handleEditConfirm = (category: Category) => {
 
 const handleDeleteConfirm = (categoryId: number) => {
   store.remove(categoryId)
+}
+
+const handleAddConfirm = (category: Category) => {
+  console.log("add confirm emitted", category)
+  store.addFirst(category)
 }
 
 </script>
@@ -63,13 +69,14 @@ const handleDeleteConfirm = (categoryId: number) => {
             <CategoryEditDialog :category="item" @@confirm="handleEditConfirm"></CategoryEditDialog>
           </template>
           <template #delete>
-            <DeleteConfirmDialog @@delete="handleDeleteConfirm(item.id)"></DeleteConfirmDialog>
+            <DeleteConfirmDialog @@delete="handleDeleteConfirm(item.id!!)"></DeleteConfirmDialog>
           </template>
         </MoreActionMenu>
       </td>
     </tr>
     </tbody>
   </VTable>
+  <CategoryAddDialog @@confirm="handleAddConfirm"></CategoryAddDialog>
 </template>
 
 <style scoped>
