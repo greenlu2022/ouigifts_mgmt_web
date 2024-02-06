@@ -16,10 +16,10 @@ const emit = defineEmits<{
 const dialog = ref(false)
 const refInputEl = ref<HTMLElement>()
 
-const bannerDataLocal = ref<Banner>({...outerProps.banner})
+const dataLocal = ref<Banner>({...outerProps.banner})
 
 const handleConfirm = () => {
-  emit("@confirm", bannerDataLocal.value)
+  emit("@confirm", dataLocal.value)
   dialog.value = false
 }
 
@@ -33,7 +33,7 @@ const changeAvatar = (file: Event) => {
     fileReader.readAsDataURL(files[0])
     fileReader.onload = () => {
       if (typeof fileReader.result === 'string') {
-        bannerDataLocal.value.imageUrl = fileReader.result
+        dataLocal.value.imageUrl = fileReader.result
       }
     }
   }
@@ -62,7 +62,7 @@ const changeAvatar = (file: Event) => {
           <VAvatar
               rounded="lg"
               size="120"
-              :image="bannerDataLocal.imageUrl"
+              :image="dataLocal.imageUrl"
           />
         </VCol>
         <VCol cols="12" sm="9" class="px-3">
@@ -89,7 +89,7 @@ const changeAvatar = (file: Event) => {
           <VTextField
               label="Name"
               variant="outlined"
-              v-model="bannerDataLocal.name"
+              v-model="dataLocal.name"
           ></VTextField>
         </VCol>
         <VCol cols="12" sm="6">
@@ -97,7 +97,7 @@ const changeAvatar = (file: Event) => {
               label="Action Type"
               :items="['None', 'Inner Route', 'Outer Route']"
               variant="outlined"
-              v-model="bannerDataLocal.actionType"
+              v-model="dataLocal.actionType"
           ></VSelect>
         </VCol>
         <VCol cols="12" sm="6">
@@ -105,14 +105,14 @@ const changeAvatar = (file: Event) => {
               placeholder="https://"
               label="Direct Url"
               variant="outlined"
-              v-model="bannerDataLocal.directUrl"
+              v-model="dataLocal.directUrl"
           ></VTextField>
         </VCol>
         <VCol cols="12" sm="6">
-          <DateTimePickField label="Start Date" v-model="bannerDataLocal.startTime"></DateTimePickField>
+          <DateTimePickField label="Start Date" v-model="dataLocal.startTime"></DateTimePickField>
         </VCol>
         <VCol cols="12" sm="6">
-          <DateTimePickField label="End Date" v-model="bannerDataLocal.endTime"></DateTimePickField>
+          <DateTimePickField label="End Date" v-model="dataLocal.endTime"></DateTimePickField>
         </VCol>
       </VRow>
       <VCardActions>

@@ -71,27 +71,27 @@ export const useBannerStore = defineStore('banner', {
                 }
             ]
             if (this.banners.length > 0) {
-                this.clearBanners()
+                this.clear()
             }
             apiBanners.forEach(banner => {
-                this.addBanner(banner)
+                this.add(banner)
             })
         },
-        addBanner(banner: Banner) {
+        add(banner: Banner) {
             this.banners.push(banner)
         },
-        addBannerUnshift(banner: Banner) {
+        addUnshift(banner: Banner) {
             this.banners.unshift(banner)
         },
-        updateBanner(banner: Banner): void {
+        update(banner: Banner): void {
             const bannerIndex = this.banners.findIndex(item => item.id == banner.id)
             this.banners.splice(bannerIndex, 1, banner)
         },
-        removeBanner(bannerId: number): void {
+        remove(bannerId: number): void {
             const bannerIndex = this.banners.findIndex(item => item.id == bannerId)
             this.banners.splice(bannerIndex, 1)
         },
-        clearBanners() {
+        clear() {
             this.banners = []
         }
     },

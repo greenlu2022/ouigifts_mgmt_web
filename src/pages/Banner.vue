@@ -1,25 +1,27 @@
 <script setup lang="ts">
 import {useBannerStore} from "@/stores/Banner.ts"
-import ActionMenu from "@/components/ActionMenu.vue";
 import Banner from "@/types/Banner.ts";
 import BannerAddDialog from "@/components/BannerAddDialog.vue";
+import BannerEditDialog from "@/components/BannerEditDialog.vue";
+import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";
+import MoreActionMenu from "@/components/MoreActionMenu.vue";
 
 const store = useBannerStore()
 store.getBanners()
 
 const handleEditConfirm = (banner: Banner) => {
   console.log("edit confirm emitted", banner)
-  store.updateBanner(banner)
+  store.update(banner)
 }
 
 const handleAddConfirm = (banner: Banner) => {
   console.log("add confirm emitted", banner)
-  store.addBanner(banner)
+  store.addUnshift(banner)
 }
 
-const handleDelete = (bannerId: number) => {
+const handleDeleteConfirm = (bannerId: number) => {
   console.log("delete emitted", bannerId)
-  store.removeBanner(bannerId)
+  store.remove(bannerId)
 }
 
 const twoLine = (dateTime: string): string => {
@@ -99,7 +101,15 @@ const twoLine = (dateTime: string): string => {
         <VSwitch class="justify-center" v-model="item.isEnabled" @change="handleEditConfirm(item)"></VSwitch>
       </td>
       <td>
-        <ActionMenu :banner="item" @@edit="handleEditConfirm" @@delete="handleDelete"></ActionMenu>
+        <!--        <ActionMenu :banner="item" @@edit="handleEditConfirm" @@delete="handleDelete"></ActionMenu>-->
+        <MoreActionMenu>
+          <template #edit>
+            <BannerEditDialog :banner="item" @@confirm="handleEditConfirm"></BannerEditDialog>
+          </template>
+          <template #delete>
+            <DeleteConfirmDialog @@delete="handleDeleteConfirm(item.id)"></DeleteConfirmDialog>
+          </template>
+        </MoreActionMenu>
       </td>
     </tr>
     </tbody>
