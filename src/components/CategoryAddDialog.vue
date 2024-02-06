@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import {ref} from "vue";
-import DateTimePickField from "@/components/DateTimePickField.vue";
-import Banner from "@/types/Banner";
+import Category from "@/types/Category.ts";
 
 const dialog = ref(false)
 const refInputEl = ref<HTMLElement>()
-const dataLocal = ref<Banner>({
+const dataLocal = ref<Category>({
   imageUrl: "https://cdn.vuetifyjs.com/images/parallax/material.jpg"
 })
 
 const emit = defineEmits<{
-  (e: '@confirm', banner: Banner): void,
+  (e: '@confirm', category: Category): void,
 }>()
 
 const handleConfirm = () => {
@@ -89,31 +88,6 @@ const changeAvatar = (file: Event) => {
               variant="outlined"
               v-model="dataLocal.name"
           ></VTextField>
-        </VCol>
-        <VCol cols="12" sm="6">
-          <v-select
-              label="Action Type"
-              :items="['None', 'Inner Route', 'Outer Route']"
-              variant="outlined"
-              v-model="dataLocal.actionType"
-          ></v-select>
-        </VCol>
-        <VCol cols="12" sm="6">
-          <VTextField
-              placeholder="https://"
-              label="Direct Url"
-              variant="outlined"
-              v-model="dataLocal.directUrl"
-          ></VTextField>
-        </VCol>
-        <!--          <VCol cols="12" sm="6">-->
-        <!--            <VueDatePicker v-model="date" position="center"></VueDatePicker>-->
-        <!--          </VCol>-->
-        <VCol cols="12" sm="6">
-          <DateTimePickField label="Start Date" v-model="dataLocal.startTime"></DateTimePickField>
-        </VCol>
-        <VCol cols="12" sm="6">
-          <DateTimePickField label="End Date" v-model="dataLocal.endTime"></DateTimePickField>
         </VCol>
       </VRow>
       <VCardActions>
