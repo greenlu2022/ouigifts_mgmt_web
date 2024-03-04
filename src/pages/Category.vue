@@ -7,7 +7,7 @@ import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";
 import CategoryAddDialog from "@/components/CategoryAddDialog.vue";
 
 const store = useCategoryStore()
-store.getCatefories()
+store.getCategories()
 
 const handleEditConfirm = (category: Category) => {
   store.update(category)
@@ -49,13 +49,13 @@ const handleAddConfirm = (category: Category) => {
         :key="item.imageUrl"
     >
       <td class="pa-3 w-25">
-        <v-img
+        <VImg
             :width="240"
             aspect-ratio="16/9"
             class="ma-auto"
             cover
             :src="item.imageUrl"
-        ></v-img>
+        ></VImg>
       </td>
       <td class="text-center">
         {{ item.name }}
