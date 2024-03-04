@@ -68,25 +68,25 @@ const twoLine = (dateTime: string): string => {
         :key="item.imageUrl"
     >
       <td class="pa-3 w-25">
-        <v-img
+        <VImg
             :width="240"
             aspect-ratio="16/9"
             class="ma-auto"
             cover
             :src="item.imageUrl"
-        ></v-img>
+        ></VImg>
       </td>
       <td class="text-center">
         {{ item.name }}
       </td>
       <td class="text-center">
-        <v-tooltip :text="item.directUrl" location="bottom">
+        <VTooltip :text="item.directUrl" location="bottom">
           <template v-slot:activator="{ props }">
             <VBtn icon v-bind="props" color="transparent" variant="flat" :href="item.directUrl" target="_blank">
               <VIcon color="white">mdi-link-variant</VIcon>
             </VBtn>
           </template>
-        </v-tooltip>
+        </VTooltip>
       </td>
       <td class="text-center">
         {{ item.actionType }}
