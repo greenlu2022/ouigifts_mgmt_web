@@ -7,7 +7,7 @@ export const useCategoryStore = defineStore('category', {
     } => ({categories: []}),
     getters: {},
     actions: {
-        getCatefories() {
+        getCategories() {
             const apiCategories: Category[] = [
                 {
                     id: 1,
