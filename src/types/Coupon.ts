@@ -2,7 +2,7 @@ export default interface Coupon {
     id?: number,
     couponTypeId?: string,
     seriesNumber?: string,
-    redeemCode?: string,
+    couponCode?: string,
     restriction?: string[],
     startTime?: string,
     endTime?: string,
@@ -10,7 +10,7 @@ export default interface Coupon {
     generatedTime?: string,
     redeemedBy?: string,
     redeemedAt?: string,
-    redeemedTimeStamp: string,
+    redeemedTime: string,
     isRedeemed?: boolean,
     isEnabled?: boolean,
 }
