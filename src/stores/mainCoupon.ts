@@ -23,6 +23,21 @@ export const useMainCouponStore = defineStore('mainCoupon', {
                 endTime: '2024-12-31 23:59:59',
                 imageUrl: "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
                 isEnabled: true,
+            }, {
+                id: 2,
+                categoryIds: ["1"],
+                name: "Google",
+                code: "APPLE_202403",
+                isLimited: true,
+                discountType: 1,
+                discountPercentage: 20,
+                availableArea: [],
+                availableAmount: 1000,
+                restriction: [],
+                startTime: '2023-12-31 00:00:00',
+                endTime: '2024-12-31 23:59:59',
+                imageUrl: "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
+                isEnabled: true,
             }]
             if (this.mainCoupons.length > 0) {
                 this.clear()
