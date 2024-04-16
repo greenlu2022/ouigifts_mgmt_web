@@ -5,27 +5,27 @@ const router = createRouter({
         routes: [
             {
                 path: '/',
-                component: () => import('../layout/default.vue'),
+                component: () => import('@/layout/default.vue'),
                 children: [
                     {
                         path: 'dashboard',
-                        component: () => import('../pages/Dashboard.vue'),
+                        component: () => import('@/pages/Dashboard.vue'),
                     },
                     {
                         path: 'banner',
-                        component: () => import('../pages/Banner.vue'),
+                        component: () => import('@/pages/Banner.vue'),
                     },
                     {
                         path: 'account',
-                        component: () => import('../pages/Account.vue'),
+                        component: () => import('@/pages/Account.vue'),
                     },
                     {
                         path: 'category',
-                        component: () => import('../pages/Category.vue'),
+                        component: () => import('@/pages/Category.vue'),
                     },
                     {
                         path: 'coupon',
-                        component: () => import('../pages/Coupon.vue'),
+                        component: () => import('@/pages/Coupon.vue'),
                     }
                 ],
             },
