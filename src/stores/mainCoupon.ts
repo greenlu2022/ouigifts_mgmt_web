@@ -10,7 +10,7 @@ export const useMainCouponStore = defineStore('mainCoupon', {
         getMainCoupons() {
             const apiMainCoupons: CouponType[] = [{
                 id: 1,
-                categoryIds: ["1"],
+                categoryIds: ["1", "2"],
                 name: "Apple",
                 code: "APPLE_202403",
                 isLimited: true,
