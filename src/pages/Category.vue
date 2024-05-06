@@ -1,13 +1,15 @@
 <script setup lang="ts">
+import {ref} from "vue";
 import {useCategoryStore} from "@/stores/category"
 import Category from "@/types/Category";
 import MoreActionMenu from "@/components/MoreActionMenu.vue";
-import CategoryEditDialog from "@/components/CategoryEditDialog.vue";
 import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";
 import CategoryAddDialog from "@/components/CategoryAddDialog.vue";
 
 const store = useCategoryStore()
 store.getCategories()
+
+const search = ref<string>("")
 
 const handleEditConfirm = (category: Category) => {
   store.update(category)
@@ -22,48 +24,52 @@ const handleAddConfirm = (category: Category) => {
   store.addFirst(category)
 }
 
+const headers = [
+  {key: 'imageUrl', title: 'Image', align: 'center', fixed: true, width: '240px'},
+  {key: 'name', title: 'Name', align: 'center'},
+  {key: 'isEnabled', title: 'Active', align: 'center',},
+  {key: 'more', title: 'More', align: 'center',}
+]
+
 </script>
 
 <template>
-  <VTable class="rounded-lg w-100 mt-9" fixed-header height="800px">
-    <thead>
-    <tr>
-      <th class="text-uppercase text-center">
-        Image
-      </th>
-      <th class="text-uppercase text-center">
-        Name
-      </th>
-      <th class="text-uppercase text-center">
-        Active
-      </th>
-      <th class="text-uppercase text-center w140">
-        More
-      </th>
-    </tr>
-    </thead>
+  <VCard class="rounded-lg mt-9 w-100">
+    <VCardTitle class="d-flex align-center pe-2">
+      <VIcon icon="mdi-view-dashboard"></VIcon> &nbsp;
+      Category
+      <VSpacer></VSpacer>
+      <VTextField
+          v-model="search"
+          label="Search"
+          prepend-inner-icon="mdi-magnify"
+          variant="solo-filled"
+          flat
+          hide-details
+          single-line
+      ></VTextField>
+    </VCardTitle>
+    <VDivider></VDivider>
 
-    <tbody>
-    <tr
-        v-for="item in store.categories"
-        :key="item.imageUrl"
-    >
-      <td class="pa-3 w-25">
-        <VImg
-            :width="240"
-            aspect-ratio="16/9"
-            class="ma-auto"
-            cover
-            :src="item.imageUrl"
-        ></VImg>
-      </td>
-      <td class="text-center">
-        {{ item.name }}
-      </td>
-      <td class="center">
+    <VDataTable v-model:search="search" :items="store.categories" :headers="( headers as any)" height="780px"
+                class="rounded-lg"
+                fixed-header>
+
+      <template v-slot:item.imageUrl="{ item }">
+        <VCard class="my-4" elevation="2" rounded>
+          <VImg
+              :width="240"
+              aspect-ratio="16/9"
+              cover
+              :src="item.imageUrl"
+          ></VImg>
+        </VCard>
+      </template>
+      <template v-slot:item.isEnabled="{ item }">
         <VSwitch class="justify-center" v-model="item.isEnabled" @change="handleEditConfirm(item)"></VSwitch>
-      </td>
-      <td>
+      </template>
+
+      <template v-slot:item.more="{ item }">
         <MoreActionMenu>
           <template #edit>
             <CategoryEditDialog :category="item" @@confirm="handleEditConfirm"></CategoryEditDialog>
@@ -72,10 +78,9 @@ const handleAddConfirm = (category: Category) => {
             <DeleteConfirmDialog @@delete="handleDeleteConfirm(item.id!!)"></DeleteConfirmDialog>
           </template>
         </MoreActionMenu>
-      </td>
-    </tr>
-    </tbody>
-  </VTable>
+      </template>
+    </VDataTable>
+  </VCard>
   <CategoryAddDialog @@confirm="handleAddConfirm"></CategoryAddDialog>
 </template>
 
