@@ -1,6 +1,6 @@
 export default interface CouponType {
     id?: number,
-    categoryIds?: string[],
+    categoryIds?: number[],
     name?: string,
     code?: string,
     isLimited?: boolean,

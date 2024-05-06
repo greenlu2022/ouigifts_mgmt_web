@@ -4,6 +4,8 @@ import {useMainCouponStore} from "@/stores/mainCoupon.ts";
 import CouponType from "@/types/CouponType.ts";
 import {ref} from "vue";
 import CategoryEditDialog from "@/components/CategoryEditDialog.vue";
+import CouponTypeAddDialog from "@/components/CouponTypeAddDialog.vue";
+
 import MoreActionMenu from "@/components/MoreActionMenu.vue";
 import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";
 import {useCategoryStore} from "@/stores/category.ts";
@@ -14,7 +16,7 @@ store.getMainCoupons()
 const categoryStore = useCategoryStore()
 categoryStore.getCategories()
 
-const getCategoryNameById = (id: string): string => {
+const getCategoryNameById = (id: number): string => {
   const category = categoryStore.categories.find(item => item.id == id)
   return <string>category?.name
 }
@@ -38,9 +40,9 @@ const headers = [
   {key: 'imageUrl', title: 'Image', align: 'center', fixed: true},
   {key: 'name', title: 'Name', align: 'center'},
   {key: 'categoryIds', title: 'Categories', align: 'center'},
-  {key: 'code', title: 'Image', align: 'center'},
-  {key: 'discountType', title: 'Discount Type', align: 'center'},
-  {key: 'discountPercentage', title: 'Discount Percentage', align: 'center'},
+  {key: 'code', title: 'Code', align: 'center'},
+  // {key: 'discountType', title: 'Discount Type', align: 'center'},
+  // {key: 'discountPercentage', title: 'Discount Percentage', align: 'center'},
   {key: 'isLimited', title: 'Limited', align: 'center',},
   {key: 'availableAmount', title: 'Available Amount', align: 'center',},
   {key: 'startTime', title: 'Start Time', align: 'center',},
@@ -54,7 +56,7 @@ const search = ref<string>("")
 </script>
 
 <template>
-  <VCard class="rounded-lg mt-9">
+  <VCard class="rounded-lg mt-9 w-100">
     <VCardTitle class="d-flex align-center pe-2">
       <VIcon icon="mdi-cards"></VIcon> &nbsp;
       Main Coupons
@@ -131,6 +133,7 @@ const search = ref<string>("")
       </template>
     </VDataTable>
   </VCard>
+  <CouponTypeAddDialog @@confirm="handleAddConfirm"></CouponTypeAddDialog>
 </template>
 
 <style scoped>

@@ -1,12 +1,37 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {ref, watch, computed} from "vue";
 import DateTimePickField from "@/components/DateTimePickField.vue";
 import CouponType from "@/types/CouponType.ts";
+import { useCategoryStore } from "@/stores/category";
 
-const dialog = ref(false)
+const categoryStore = useCategoryStore()
+const categories = categoryStore.categories.map(item => {
+  return {title: item.name, value: item.id}
+})
+
+
+const dialog = ref<boolean>(false)
+const valid = ref<boolean>(false)
+
+const errorMessage = ref<string>("")
 const refInputEl = ref<HTMLElement>()
 const dataLocal = ref<CouponType>({
   imageUrl: "https://cdn.vuetifyjs.com/images/parallax/material.jpg"
+})
+
+watch(dialog, ()=>{
+  errorMessage.value = ""
+})
+
+const hasEmptyValue = computed(() => {
+  return dataLocal.value.name == null || dataLocal.value.code == null || dataLocal.value.categoryIds?.length == 0 
+})
+
+watch(hasEmptyValue, (newValue)=>{
+  if((newValue == false)){
+    errorMessage.value = ""
+  }
+  
 })
 
 const emit = defineEmits<{
@@ -14,10 +39,17 @@ const emit = defineEmits<{
 }>()
 
 const handleConfirm = () => {
+  if(hasEmptyValue.value){
+    console.log('hasEmptyValue', hasEmptyValue)
+    errorMessage.value = "Required field can't be empty"
+  }else{
   emit("@confirm", dataLocal.value)
   dialog.value = false
   dataLocal.value = {}
   dataLocal.value.imageUrl = "https://cdn.vuetifyjs.com/images/parallax/material.jpg"
+  errorMessage.value = ""
+  }
+  
 }
 
 // changeAvatar function
@@ -53,8 +85,9 @@ const changeAvatar = (file: Event) => {
     </template>
     <VCard class="pa-3">
       <VCardTitle class="text-h5">
-        Add Banner
+        Add Main Coupon Type
       </VCardTitle>
+      <VForm v-model="valid" validate-on="submit lazy" @submit.prevent >
       <VRow class="pa-3">
         <VCol cols="12" sm="3" class="px-3">
           <VAvatar
@@ -85,35 +118,68 @@ const changeAvatar = (file: Event) => {
         </VCol>
         <VCol cols="12" sm="6">
           <VTextField
-              label="Name"
+              ref="name"
+              label="Name*"
               variant="outlined"
               v-model="dataLocal.name"
+              :rules="[() => !!dataLocal.name || 'This field is required']"
+              required
           ></VTextField>
-        </VCol>
-        <VCol cols="12" sm="6">
-          <v-select
-              label="Action Type"
-              :items="['None', 'Inner Route', 'Outer Route']"
-              variant="outlined"
-              v-model="dataLocal.actionType"
-          ></v-select>
         </VCol>
         <VCol cols="12" sm="6">
           <VTextField
-              placeholder="https://"
-              label="Direct Url"
+              ref="code"
+              label="Code*"
               variant="outlined"
-              v-model="dataLocal.directUrl"
+              v-model="dataLocal.code"
+              :rules="[() => !!dataLocal.code || 'This field is required']"
+              required
           ></VTextField>
         </VCol>
-        <!--          <VCol cols="12" sm="6">-->
-        <!--            <VueDatePicker v-model="date" position="center"></VueDatePicker>-->
-        <!--          </VCol>-->
+        <VCol cols="12" >
+          <v-select
+              label="Category(s)*"
+              :items="categories"
+              variant="outlined"
+              multiple
+              chips
+              v-model="dataLocal.categoryIds"
+              :rules="[() => !!dataLocal.categoryIds?.length || 'This field is required']"
+              required
+          ></v-select>
+        </VCol>
+
+        <!-- <VCol cols="12" sm="6">
+
+        </VCol> -->
+    
         <VCol cols="12" sm="6">
           <DateTimePickField label="Start Date" v-model="dataLocal.startTime"></DateTimePickField>
         </VCol>
         <VCol cols="12" sm="6">
           <DateTimePickField label="End Date" v-model="dataLocal.endTime"></DateTimePickField>
+        </VCol>
+        <VCol cols="12" sm="6">
+          <VCheckbox v-model="dataLocal.isLimited" label="Limited"></VCheckbox>
+        </VCol>
+        <VCol cols="12" sm="6">
+          <VTextField
+              label="Available Amount"
+              variant="outlined"
+              v-model="dataLocal.availableAmount"
+              single-line
+              type="number"
+              :disabled="!dataLocal.isLimited"
+              :required="dataLocal.isLimited"
+          ></VTextField>
+        </VCol>
+     
+        <VCol cols="12" sm="6">
+          <VSwitch class="w-50" v-model="dataLocal.isEnabled" :label="dataLocal.isEnabled? 'Activated': 'Disabled'"></VSwitch>
+        </VCol>
+
+        <VCol cols="12" v-if="errorMessage.length>0">
+          <div class="text-red text-center">{{ errorMessage }}</div>
         </VCol>
       </VRow>
       <VCardActions>
@@ -126,12 +192,14 @@ const changeAvatar = (file: Event) => {
           Dismiss
         </VBtn>
         <VBtn
+        type="submit"
             color="green-darken-1"
             @click="handleConfirm"
         >
           Save
         </VBtn>
       </VCardActions>
+    </VForm>
     </VCard>
   </VDialog>
 </template>
