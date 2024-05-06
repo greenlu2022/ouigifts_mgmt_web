@@ -37,7 +37,7 @@ const handleAddConfirm = (couponType: CouponType) => {
 
 
 const headers = [
-  {key: 'imageUrl', title: 'Image', align: 'center', fixed: true},
+  {key: 'imageUrl', title: 'Image', align: 'center', fixed: true, width: '240px'},
   {key: 'name', title: 'Name', align: 'center'},
   {key: 'categoryIds', title: 'Categories', align: 'center'},
   {key: 'code', title: 'Code', align: 'center'},

@@ -32,7 +32,7 @@ const twoLine = (dateTime: string): string => {
 }
 
 const headers = [
-  {key: 'imageUrl', title: 'Image', align: 'center', fixed: true},
+  {key: 'imageUrl', title: 'Image', align: 'center', fixed: true, width: '240px'},
   {key: 'name', title: 'Name', align: 'center'},
   {key: 'directUrl', title: 'Direct Url', align: 'center'},
   {key: 'actionType', title: 'Action Type', align: 'center'},
