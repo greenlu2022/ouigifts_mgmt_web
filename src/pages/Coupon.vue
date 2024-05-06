@@ -3,8 +3,8 @@
 import {useMainCouponStore} from "@/stores/mainCoupon.ts";
 import CouponType from "@/types/CouponType.ts";
 import {ref} from "vue";
-import CategoryEditDialog from "@/components/CategoryEditDialog.vue";
 import CouponTypeAddDialog from "@/components/CouponTypeAddDialog.vue";
+import CouponTypeEditDialog from "@/components/CouponTypeEditDialog.vue";
 
 import MoreActionMenu from "@/components/MoreActionMenu.vue";
 import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";
@@ -109,6 +109,15 @@ const search = ref<string>("")
         </div>
       </template>
 
+      <template v-slot:item.availableAmount="{ item }">
+        <span v-if="item.isLimited" class="text-center">
+            {{ item.availableAmount }}
+        </span>
+        <div v-if="!item.isLimited" class="text-center">
+          <VIcon icon="mdi-all-inclusive"></VIcon> &nbsp;
+        </div>
+      </template>
+
       <template v-slot:item.isEnabled="{ item }">
         <div class="text-end">
           <VChip
@@ -124,7 +133,7 @@ const search = ref<string>("")
       <template v-slot:item.more="{ item }">
         <MoreActionMenu>
           <template #edit>
-            <CategoryEditDialog :category="item" @@confirm="handleEditConfirm"></CategoryEditDialog>
+            <CouponTypeEditDialog :couponType="item" @@confirm="handleEditConfirm"></CouponTypeEditDialog>
           </template>
           <template #delete>
             <DeleteConfirmDialog @@delete="handleDeleteConfirm(item.id!!)"></DeleteConfirmDialog>
