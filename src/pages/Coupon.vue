@@ -16,11 +16,12 @@ store.getMainCoupons()
 const categoryStore = useCategoryStore()
 categoryStore.getCategories()
 
+const search = ref<string>("")
+
 const getCategoryNameById = (id: number): string => {
   const category = categoryStore.categories.find(item => item.id == id)
   return <string>category?.name
 }
-
 
 const handleEditConfirm = (couponType: CouponType) => {
   store.update(couponType)
@@ -34,7 +35,6 @@ const handleAddConfirm = (couponType: CouponType) => {
   console.log("add confirm emitted", couponType)
   store.addFirst(couponType)
 }
-
 
 const headers = [
   {key: 'imageUrl', title: 'Image', align: 'center', fixed: true, width: '240px'},
@@ -50,8 +50,6 @@ const headers = [
   {key: 'isEnabled', title: 'Active', align: 'center',},
   {key: 'more', title: 'More', align: 'center',}
 ]
-
-const search = ref<string>("")
 
 </script>
 

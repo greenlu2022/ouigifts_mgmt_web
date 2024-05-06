@@ -42,7 +42,6 @@ const headers = [
   {key: 'more', title: 'More', align: 'center',}
 ]
 
-
 </script>
 
 <template>
