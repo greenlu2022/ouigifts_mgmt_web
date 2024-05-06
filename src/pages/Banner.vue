@@ -5,9 +5,12 @@ import BannerAddDialog from "@/components/BannerAddDialog.vue";
 import BannerEditDialog from "@/components/BannerEditDialog.vue";
 import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";
 import MoreActionMenu from "@/components/MoreActionMenu.vue";
+import {ref} from "vue";
 
 const store = useBannerStore()
 store.getBanners()
+
+const search = ref<string>("")
 
 const handleEditConfirm = (banner: Banner) => {
   console.log("edit confirm emitted", banner)
@@ -28,58 +31,59 @@ const twoLine = (dateTime: string): string => {
   return dateTime.replace(" ", "<br/>")
 }
 
+const headers = [
+  {key: 'imageUrl', title: 'Image', align: 'center', fixed: true},
+  {key: 'name', title: 'Name', align: 'center'},
+  {key: 'directUrl', title: 'Direct Url', align: 'center'},
+  {key: 'actionType', title: 'Action Type', align: 'center'},
+  {key: 'startTime', title: 'Start Time', align: 'center',},
+  {key: 'endTime', title: 'End Time', align: 'center',},
+  {key: 'isEnabled', title: 'Active', align: 'center',},
+  {key: 'more', title: 'More', align: 'center',}
+]
+
 
 </script>
 
 <template>
-  <VTable class="rounded-lg w-100 mt-9" fixed-header height="800px">
-    <thead>
-    <tr>
-      <th class="text-uppercase text-center">
-        Image
-      </th>
-      <th class="text-uppercase text-center">
-        Name
-      </th>
-      <th class="text-uppercase text-center">
-        Direct Url
-      </th>
-      <th class="text-uppercase text-center">
-        Action Type
-      </th>
-      <th class="text-uppercase text-center">
-        Start Time
-      </th>
-      <th class="text-uppercase text-center">
-        End Time
-      </th>
-      <th class="text-uppercase text-center">
-        Active
-      </th>
-      <th class="text-uppercase text-center w140">
-        More
-      </th>
-    </tr>
-    </thead>
+  <VCard class="rounded-lg mt-9 w-100">
+    <VCardTitle class="d-flex align-center pe-2">
+      <VIcon icon="mdi-image-area"></VIcon> &nbsp;
+      Banner
+      <VSpacer></VSpacer>
+      <VTextField
+          v-model="search"
+          label="Search"
+          prepend-inner-icon="mdi-magnify"
+          variant="solo-filled"
+          flat
+          hide-details
+          single-line
+      ></VTextField>
+    </VCardTitle>
+    <VDivider></VDivider>
 
-    <tbody>
-    <tr
-        v-for="item in store.banners"
-        :key="item.imageUrl"
-    >
-      <td class="pa-3 w-25">
-        <VImg
-            :width="240"
-            aspect-ratio="16/9"
-            class="ma-auto"
-            cover
-            :src="item.imageUrl"
-        ></VImg>
-      </td>
-      <td class="text-center">
-        {{ item.name }}
-      </td>
-      <td class="text-center">
+    <VDataTable v-model:search="search" :items="store.banners" :headers="( headers as any)" height="780px"
+                class="rounded-lg"
+                fixed-header>
+
+
+      <template v-slot:item.imageUrl="{ item }">
+        <VCard class="my-4" elevation="2" rounded>
+          <VImg
+              :width="240"
+              aspect-ratio="16/9"
+              class="ma-auto"
+              cover
+              :src="item.imageUrl"
+          ></VImg>
+        </VCard>
+      </template>
+      <template v-slot:item.isEnabled="{ item }">
+        <VSwitch class="justify-center" v-model="item.isEnabled" @change="handleEditConfirm(item)"></VSwitch>
+      </template>
+
+      <template v-slot:item.directUrl="{ item }">
         <VTooltip :text="item.directUrl" location="bottom">
           <template v-slot:activator="{ props }">
             <VBtn icon v-bind="props" color="transparent" variant="flat" :href="item.directUrl" target="_blank">
@@ -87,21 +91,18 @@ const twoLine = (dateTime: string): string => {
             </VBtn>
           </template>
         </VTooltip>
-      </td>
-      <td class="text-center">
-        {{ item.actionType }}
-      </td>
-      <td class="text-center">
+      </template>
+
+      <template v-slot:item.startTime="{ item }">
         <span v-html="twoLine(item.startTime!!)"></span>
-      </td>
-      <td class="text-center">
+      </template>
+
+      <template v-slot:item.endTime="{ item }">
         <span v-html="twoLine(item.endTime!!)"></span>
-      </td>
-      <td class="center">
-        <VSwitch class="justify-center" v-model="item.isEnabled" @change="handleEditConfirm(item)"></VSwitch>
-      </td>
-      <td>
-        <!--        <ActionMenu :banner="item" @@edit="handleEditConfirm" @@delete="handleDelete"></ActionMenu>-->
+      </template>
+
+
+      <template v-slot:item.more="{ item }">
         <MoreActionMenu>
           <template #edit>
             <BannerEditDialog :banner="item" @@confirm="handleEditConfirm"></BannerEditDialog>
@@ -110,10 +111,9 @@ const twoLine = (dateTime: string): string => {
             <DeleteConfirmDialog @@delete="handleDeleteConfirm(item.id!!)"></DeleteConfirmDialog>
           </template>
         </MoreActionMenu>
-      </td>
-    </tr>
-    </tbody>
-  </VTable>
+      </template>
+    </VDataTable>
+  </VCard>
   <BannerAddDialog @@confirm="handleAddConfirm"></BannerAddDialog>
 </template>
 
