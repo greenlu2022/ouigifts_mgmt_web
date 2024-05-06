@@ -67,7 +67,6 @@ const headers = [
                 class="rounded-lg"
                 fixed-header>
 
-
       <template v-slot:item.imageUrl="{ item }">
         <VCard class="my-4" elevation="2" rounded>
           <VImg
@@ -100,7 +99,6 @@ const headers = [
       <template v-slot:item.endTime="{ item }">
         <span v-html="twoLine(item.endTime!!)"></span>
       </template>
-
 
       <template v-slot:item.more="{ item }">
         <MoreActionMenu>
