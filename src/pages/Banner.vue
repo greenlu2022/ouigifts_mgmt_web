@@ -39,7 +39,7 @@ const headers = [
   {key: 'startTime', title: 'Start Time', align: 'center',},
   {key: 'endTime', title: 'End Time', align: 'center',},
   {key: 'isEnabled', title: 'Active', align: 'center',},
-  {key: 'more', title: 'More', align: 'center',}
+  {key: 'more', title: 'More', align: 'center', width: '120px'}
 ]
 
 </script>

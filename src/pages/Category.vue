@@ -28,7 +28,7 @@ const headers = [
   {key: 'imageUrl', title: 'Image', align: 'center', fixed: true, width: '240px'},
   {key: 'name', title: 'Name', align: 'center'},
   {key: 'isEnabled', title: 'Active', align: 'center',},
-  {key: 'more', title: 'More', align: 'center',}
+  {key: 'more', title: 'More', align: 'center', width: '120px'}
 ]
 
 </script>
