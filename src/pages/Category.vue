@@ -5,6 +5,7 @@ import Category from "@/types/Category";
 import MoreActionMenu from "@/components/MoreActionMenu.vue";
 import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";
 import CategoryAddDialog from "@/components/CategoryAddDialog.vue";
+import CategoryEditDialog from "@/components/CategoryEditDialog.vue";
 
 const store = useCategoryStore()
 store.getCategories()

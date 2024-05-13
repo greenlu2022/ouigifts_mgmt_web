@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import {ref} from 'vue'
+import {reactive, ref} from 'vue'
 import Category from "@/types/Category.ts";
+import {required} from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
 
 
 const outerProps = defineProps<{
@@ -15,12 +17,13 @@ const emit = defineEmits<{
 const dialog = ref(false)
 const refInputEl = ref<HTMLElement>()
 
-const dataLocal = ref<Category>({...outerProps.category})
-
-const handleConfirm = () => {
-  emit("@confirm", dataLocal.value)
-  dialog.value = false
-}
+// const dataLocal = ref<Category>({...outerProps.category})
+const localFormData = reactive({
+  id: outerProps.category.id ? outerProps.category.id : 0,
+  imageUrl: outerProps.category.imageUrl ? outerProps.category.imageUrl : "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
+  name: outerProps.category.name ? outerProps.category.name : "",
+  isEnabled: outerProps.category.isEnabled ? outerProps.category.isEnabled : false,
+})
 
 
 // changeAvatar function
@@ -32,11 +35,34 @@ const changeAvatar = (file: Event) => {
     fileReader.readAsDataURL(files[0])
     fileReader.onload = () => {
       if (typeof fileReader.result === 'string') {
-        dataLocal.value.imageUrl = fileReader.result
+        Object.assign(localFormData, {imageUrl: fileReader.result})
       }
     }
   }
 }
+
+const rules = {
+  imageUrl: {
+    required
+  },
+  name: {
+    required,
+  }
+};
+
+const v$ = useVuelidate(rules, localFormData);
+
+const handleSubmit = () => {
+  v$.value.$validate();
+  if (!v$.value.$error) {
+    emit("@confirm", localFormData);
+    dialog.value = false;
+  } else {
+    console.log("Category submit v$.value.$error", v$.value.$error)
+    console.log("Category submit", v$.value.name.$error)
+    console.log("Category submit errors", v$.value.name?.$errors.map((e: any) => e.$message));
+  }
+};
 
 </script>
 
@@ -61,7 +87,7 @@ const changeAvatar = (file: Event) => {
           <VAvatar
               rounded="lg"
               size="120"
-              :image="dataLocal.imageUrl"
+              :image="localFormData.imageUrl"
           />
         </VCol>
         <VCol cols="12" sm="9" class="px-3">
@@ -86,9 +112,11 @@ const changeAvatar = (file: Event) => {
         </VCol>
         <VCol cols="12" sm="6">
           <VTextField
+              v-model="localFormData.name"
+              :error-messages="v$.name.$errors.map((e: any) => e.$message)"
               label="Name"
+              required
               variant="outlined"
-              v-model="dataLocal.name"
           ></VTextField>
         </VCol>
       </VRow>
@@ -103,7 +131,7 @@ const changeAvatar = (file: Event) => {
         </VBtn>
         <VBtn
             color="green-darken-1"
-            @click="handleConfirm"
+            @click="handleSubmit"
         >
           Save
         </VBtn>
