@@ -74,6 +74,7 @@ const headers = [
               class="ma-auto"
               cover
               :src="item.imageUrl"
+              :class="{ grayscale: !item.isEnabled }"
           ></VImg>
         </VCard>
       </template>
