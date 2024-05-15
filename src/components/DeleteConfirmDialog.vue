@@ -33,7 +33,7 @@ const handleConfirm = () => {
       </VCardTitle>
       <VRow class="pa-3">
         <VCol cols="12" sm="6">
-          Are you Sure ?
+          Are You Sure ?
         </VCol>
       </VRow>
       <VCardActions>
