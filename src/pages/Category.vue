@@ -63,6 +63,7 @@ const headers = [
               aspect-ratio="16/9"
               cover
               :src="item.imageUrl"
+              :class="{ grayscale: !item.isEnabled }"
           ></VImg>
         </VCard>
       </template>
