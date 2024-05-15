@@ -119,8 +119,10 @@ const changeAvatar = (file: Event) => {
               required
           ></VTextField>
         </VCol>
-        <VCol cols="12" sm="6" class="justify-end">
-          <VSwitch v-model="localFormData.isEnabled"></VSwitch>
+        <VCol cols="12" sm="6">
+          <VSwitch v-model="localFormData.isEnabled"
+                   :label="`${localFormData.isEnabled?'Activated':'Disabled'}`"
+          ></VSwitch>
         </VCol>
       </VRow>
       <VCardActions>
