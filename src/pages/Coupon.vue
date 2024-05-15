@@ -118,15 +118,7 @@ const headers = [
       </template>
 
       <template v-slot:item.isEnabled="{ item }">
-        <div class="text-end">
-          <VChip
-              :color="item.isEnabled ? 'green' : 'red'"
-              :text="item.isEnabled ? 'activated' : 'disabled'"
-              class="text-uppercase"
-              size="small"
-              label
-          ></VChip>
-        </div>
+        <VSwitch class="justify-center" v-model="item.isEnabled" @change="handleEditConfirm(item)"></VSwitch>
       </template>
 
       <template v-slot:item.more="{ item }">
