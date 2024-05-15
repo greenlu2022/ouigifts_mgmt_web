@@ -2,7 +2,7 @@
 import {reactive, ref} from 'vue'
 import Category from "@/types/Category.ts";
 import {required} from "@vuelidate/validators";
-import useVuelidate from "@vuelidate/core";
+import {useVuelidate} from "@vuelidate/core";
 
 
 const outerProps = defineProps<{
@@ -55,12 +55,10 @@ const v$ = useVuelidate(rules, localFormData);
 const handleSubmit = () => {
   v$.value.$validate();
   if (!v$.value.$error) {
-    emit("@confirm", localFormData);
+    emit("@confirm", {...localFormData});
     dialog.value = false;
   } else {
-    console.log("Category submit v$.value.$error", v$.value.$error)
-    console.log("Category submit", v$.value.name.$error)
-    console.log("Category submit errors", v$.value.name?.$errors.map((e: any) => e.$message));
+    return
   }
 };
 

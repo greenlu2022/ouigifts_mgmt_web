@@ -1,23 +1,51 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {reactive, ref} from "vue";
 import Category from "@/types/Category.ts";
+import {required} from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
+
+const localFormData = reactive({
+  imageUrl: "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
+  name: "",
+  isEnabled: false,
+})
+
+const rules = {
+  imageUrl: {
+    required
+  },
+  name: {
+    required,
+  }
+};
+
+const v$ = useVuelidate(rules, localFormData);
 
 const dialog = ref(false)
 const refInputEl = ref<HTMLElement>()
-const dataLocal = ref<Category>({
-  imageUrl: "https://cdn.vuetifyjs.com/images/parallax/material.jpg"
-})
+
 
 const emit = defineEmits<{
   (e: '@confirm', category: Category): void,
 }>()
 
-const handleConfirm = () => {
-  emit("@confirm", dataLocal.value)
-  dialog.value = false
-  dataLocal.value = {}
-  dataLocal.value.imageUrl = "https://cdn.vuetifyjs.com/images/parallax/material.jpg"
-}
+
+const handleSubmit = () => {
+  v$.value.$validate();
+  if (!v$.value.$error) {
+    emit("@confirm", {...localFormData});
+    dialog.value = false;
+
+    Object.assign(localFormData, {
+      imageUrl: "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
+      name: "",
+      isEnabled: false
+    })
+    v$.value.$reset();
+  } else {
+    return
+  }
+};
 
 // changeAvatar function
 const changeAvatar = (file: Event) => {
@@ -28,7 +56,7 @@ const changeAvatar = (file: Event) => {
     fileReader.readAsDataURL(files[0])
     fileReader.onload = () => {
       if (typeof fileReader.result === 'string') {
-        dataLocal.value.imageUrl = fileReader.result
+        Object.assign(localFormData, {imageUrl: fileReader.result})
       }
     }
   }
@@ -59,7 +87,7 @@ const changeAvatar = (file: Event) => {
           <VAvatar
               rounded="lg"
               size="120"
-              :image="dataLocal.imageUrl"
+              :image="localFormData.imageUrl"
           />
         </VCol>
         <VCol cols="12" sm="9" class="px-3">
@@ -86,8 +114,13 @@ const changeAvatar = (file: Event) => {
           <VTextField
               label="Name"
               variant="outlined"
-              v-model="dataLocal.name"
+              v-model="localFormData.name"
+              :error-messages="v$.name.$errors.map((e: any) => e.$message)"
+              required
           ></VTextField>
+        </VCol>
+        <VCol cols="12" sm="6" class="justify-end">
+          <VSwitch v-model="localFormData.isEnabled"></VSwitch>
         </VCol>
       </VRow>
       <VCardActions>
@@ -101,7 +134,7 @@ const changeAvatar = (file: Event) => {
         </VBtn>
         <VBtn
             color="green-darken-1"
-            @click="handleConfirm"
+            @click="handleSubmit"
         >
           Save
         </VBtn>
@@ -111,5 +144,8 @@ const changeAvatar = (file: Event) => {
 </template>
 
 <style scoped>
-
+:deep(.v-selection-control) {
+  padding-right: 8px;
+  justify-content: end;
+}
 </style>
