@@ -1,23 +1,67 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {reactive, ref} from "vue";
 import DateTimePickField from "@/components/DateTimePickField.vue";
 import Banner from "@/types/Banner";
+import {useVuelidate} from "@vuelidate/core";
+import {required, url} from "@vuelidate/validators";
+
+
+const initialData = {
+  imageUrl: "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
+  name: "",
+  directUrl: "",
+  actionType: "None",
+  startTime: "",
+  endTime: "",
+  isEnabled: false,
+}
 
 const dialog = ref(false)
 const refInputEl = ref<HTMLElement>()
-const dataLocal = ref<Banner>({
-  imageUrl: "https://cdn.vuetifyjs.com/images/parallax/material.jpg"
-})
+
+const localFormData = reactive({...initialData})
+
+const rules = {
+  imageUrl: {
+    required,
+    url
+  },
+  name: {
+    required,
+  },
+  directUrl: {
+    required,
+    url
+  },
+  actionType: {
+    required,
+  },
+};
+
+
+const v$ = useVuelidate(rules, localFormData);
 
 const emit = defineEmits<{
   (e: '@confirm', banner: Banner): void,
 }>()
 
-const handleConfirm = () => {
-  emit("@confirm", dataLocal.value)
-  dialog.value = false
-  dataLocal.value = {}
-  dataLocal.value.imageUrl = "https://cdn.vuetifyjs.com/images/parallax/material.jpg"
+const handleSubmit = () => {
+  v$.value.$validate();
+  if (!v$.value.$error) {
+    emit("@confirm", {...localFormData});
+    dialog.value = false;
+
+    Object.assign(localFormData, {...initialData})
+    v$.value.$reset();
+  } else {
+    return
+  }
+};
+
+const handleDismiss = () => {
+  dialog.value = false;
+  Object.assign(localFormData, {...initialData})
+  v$.value.$reset();
 }
 
 // changeAvatar function
@@ -29,7 +73,7 @@ const changeAvatar = (file: Event) => {
     fileReader.readAsDataURL(files[0])
     fileReader.onload = () => {
       if (typeof fileReader.result === 'string') {
-        dataLocal.value.imageUrl = fileReader.result
+        Object.assign(localFormData, {imageUrl: fileReader.result})
       }
     }
   }
@@ -60,7 +104,7 @@ const changeAvatar = (file: Event) => {
           <VAvatar
               rounded="lg"
               size="120"
-              :image="dataLocal.imageUrl"
+              :image="localFormData.imageUrl"
           />
         </VCol>
         <VCol cols="12" sm="9" class="px-3">
@@ -87,7 +131,9 @@ const changeAvatar = (file: Event) => {
           <VTextField
               label="Name"
               variant="outlined"
-              v-model="dataLocal.name"
+              v-model="localFormData.name"
+              :error-messages="v$.name.$errors.map((e: any) => e.$message)"
+              required
           ></VTextField>
         </VCol>
         <VCol cols="12" sm="6">
@@ -95,25 +141,31 @@ const changeAvatar = (file: Event) => {
               label="Action Type"
               :items="['None', 'Inner Route', 'Outer Route']"
               variant="outlined"
-              v-model="dataLocal.actionType"
+              v-model="localFormData.actionType"
+              :error-messages="v$.actionType.$errors.map((e: any) => e.$message)"
+              required
           ></v-select>
         </VCol>
         <VCol cols="12" sm="6">
           <VTextField
-              placeholder="https://"
+              placeholder="https://ouigifts.com"
               label="Direct Url"
               variant="outlined"
-              v-model="dataLocal.directUrl"
+              v-model="localFormData.directUrl"
+              :error-messages="v$.directUrl.$errors.map((e: any) => e.$message)"
+              required
           ></VTextField>
         </VCol>
-        <!--          <VCol cols="12" sm="6">-->
-        <!--            <VueDatePicker v-model="date" position="center"></VueDatePicker>-->
-        <!--          </VCol>-->
         <VCol cols="12" sm="6">
-          <DateTimePickField label="Start Date" v-model="dataLocal.startTime"></DateTimePickField>
+          <DateTimePickField label="Start Date" v-model="localFormData.startTime"></DateTimePickField>
         </VCol>
         <VCol cols="12" sm="6">
-          <DateTimePickField label="End Date" v-model="dataLocal.endTime"></DateTimePickField>
+          <DateTimePickField label="End Date" v-model="localFormData.endTime"></DateTimePickField>
+        </VCol>
+        <VCol cols="12" sm="6">
+          <VSwitch v-model="localFormData.isEnabled"
+                   :label="`${localFormData.isEnabled?'Activated':'Disabled'}`"
+          ></VSwitch>
         </VCol>
       </VRow>
       <VCardActions>
@@ -121,13 +173,13 @@ const changeAvatar = (file: Event) => {
         <VBtn
             color="red"
             variant="text"
-            @click="dialog = false"
+            @click="handleDismiss"
         >
           Dismiss
         </VBtn>
         <VBtn
             color="green-darken-1"
-            @click="handleConfirm"
+            @click="handleSubmit"
         >
           Save
         </VBtn>
