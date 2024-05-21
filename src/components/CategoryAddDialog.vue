@@ -2,13 +2,16 @@
 import {reactive, ref} from "vue";
 import Category from "@/types/Category.ts";
 import {required} from "@vuelidate/validators";
-import useVuelidate from "@vuelidate/core";
+import {useVuelidate} from "@vuelidate/core";
 
-const localFormData = reactive({
+
+const initialData = {
   imageUrl: "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
   name: "",
   isEnabled: false,
-})
+}
+
+const localFormData = reactive({...initialData})
 
 const rules = {
   imageUrl: {
@@ -46,6 +49,12 @@ const handleSubmit = () => {
     return
   }
 };
+
+const handleDismiss = () => {
+  dialog.value = false;
+  Object.assign(localFormData, {...initialData})
+  v$.value.$reset();
+}
 
 // changeAvatar function
 const changeAvatar = (file: Event) => {
@@ -130,7 +139,7 @@ const changeAvatar = (file: Event) => {
         <VBtn
             color="red"
             variant="text"
-            @click="dialog = false"
+            @click="handleDismiss"
         >
           Dismiss
         </VBtn>
@@ -144,10 +153,3 @@ const changeAvatar = (file: Event) => {
     </VCard>
   </VDialog>
 </template>
-
-<style scoped>
-:deep(.v-selection-control) {
-  padding-right: 8px;
-  justify-content: end;
-}
-</style>
