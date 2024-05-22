@@ -52,9 +52,9 @@ const rules = {
 
 const v$ = useVuelidate(rules, localFormData);
 
-const handleSubmit = () => {
-  v$.value.$validate();
-  if (!v$.value.$error) {
+const handleSubmit = async () => {
+  const isFormCorrect = await v$.value.$validate();
+  if (isFormCorrect) {
     emit("@confirm", {...localFormData});
     dialog.value = false;
   } else {
