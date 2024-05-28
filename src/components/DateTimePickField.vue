@@ -71,6 +71,7 @@ const closeDialog = () => {
                   variant="outlined"
                   readonly
                   v-bind="props"
+                  :error-messages="fieldProps.errorMessages"
                   v-on="isActive"
       >
       </VTextField>

@@ -4,9 +4,10 @@ import DateTimePickField from "@/components/DateTimePickField.vue";
 import Banner from "@/types/Banner";
 import {useVuelidate} from "@vuelidate/core";
 import {required, url} from "@vuelidate/validators";
+import {endDateAfterStartDate} from "@/validators/formValidators.ts";
 
 
-const initialData = {
+const initialData: Banner = {
   imageUrl: "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
   name: "",
   directUrl: "",
@@ -36,6 +37,9 @@ const rules = {
   actionType: {
     required,
   },
+  endTime: {
+    endDateAfterStartDate
+  }
 };
 
 
@@ -160,7 +164,10 @@ const changeAvatar = (file: Event) => {
           <DateTimePickField label="Start Date" v-model="localFormData.startTime"></DateTimePickField>
         </VCol>
         <VCol cols="12" sm="6">
-          <DateTimePickField label="End Date" v-model="localFormData.endTime"></DateTimePickField>
+          <DateTimePickField label="End Date"
+                             v-model="localFormData.endTime"
+                             :error-messages="v$.endTime.$errors.map((e: any):string => e.$message)"
+          ></DateTimePickField>
         </VCol>
         <VCol cols="12" sm="6">
           <VSwitch v-model="localFormData.isEnabled"
