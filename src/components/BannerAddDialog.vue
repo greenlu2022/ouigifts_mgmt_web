@@ -4,7 +4,7 @@ import DateTimePickField from "@/components/DateTimePickField.vue";
 import Banner from "@/types/Banner";
 import {useVuelidate} from "@vuelidate/core";
 import {required, url} from "@vuelidate/validators";
-import {endDateAfterStartDate} from "@/validators/formValidators.ts";
+import {endDateAfterStartDate, isUrlWhenActionTypeIsNotNone} from "@/validators/formValidators.ts";
 
 
 const initialData: Banner = {
@@ -28,14 +28,13 @@ const rules = {
     url
   },
   name: {
-    required,
+    required
   },
   directUrl: {
-    required,
-    url
+    isUrlWhenActionTypeIsNotNone
   },
   actionType: {
-    required,
+    required
   },
   endTime: {
     endDateAfterStartDate
