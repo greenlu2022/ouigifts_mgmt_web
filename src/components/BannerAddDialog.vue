@@ -156,7 +156,7 @@ const changeAvatar = (file: Event) => {
               variant="outlined"
               v-model="localFormData.directUrl"
               :error-messages="v$.directUrl.$errors.map((e: any) => e.$message)"
-              required
+              :disabled="localFormData.actionType === 'None'"
           ></VTextField>
         </VCol>
         <VCol cols="12" sm="6">

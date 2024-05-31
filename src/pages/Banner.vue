@@ -85,7 +85,14 @@ const headers = [
       <template v-slot:item.directUrl="{ item }">
         <VTooltip :text="item.directUrl" location="bottom">
           <template v-slot:activator="{ props }">
-            <VBtn icon v-bind="props" color="transparent" variant="flat" :href="item.directUrl" target="_blank">
+            <VBtn v-if="item.actionType !== 'None'"
+                  icon
+                  v-bind="props"
+                  color="transparent"
+                  variant="flat"
+                  :href="item.directUrl"
+                  target="_blank"
+            >
               <VIcon color="white">mdi-link-variant</VIcon>
             </VBtn>
           </template>
