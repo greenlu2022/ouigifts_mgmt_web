@@ -57,6 +57,7 @@ const handleSubmit = async () => {
   if (isFormCorrect) {
     emit("@confirm", {...localFormData});
     dialog.value = false;
+    v$.value.$reset();
   } else {
     return
   }
