@@ -146,6 +146,7 @@ const changeAvatar = (file: Event) => {
               label="Direct Url"
               variant="outlined"
               v-model="localFormData.directUrl"
+              :error-messages="v$.directUrl.$errors.map((e: any):string => e.$message)"
               :disabled="localFormData.actionType === 'None'"
           ></VTextField>
         </VCol>
