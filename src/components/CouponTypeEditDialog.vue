@@ -44,9 +44,6 @@ const rules = {
   name: {
     required
   },
-  code: {
-    required
-  },
   categoryIds: {
     required
   },
@@ -150,8 +147,7 @@ const changeAvatar = (file: Event) => {
                 label="Code*"
                 variant="outlined"
                 v-model="localFormData.code"
-                :error-messages="v$.name.$errors.map((e: any) => e.$message)"
-                required
+                disabled
             ></VTextField>
           </VCol>
           <VCol cols="12">
@@ -162,7 +158,7 @@ const changeAvatar = (file: Event) => {
                 multiple
                 chips
                 v-model="localFormData.categoryIds"
-                :error-messages="v$.name.$errors.map((e: any) => e.$message)"
+                :error-messages="v$.categoryIds.$errors.map((e: any) => e.$message)"
                 required
             ></v-select>
           </VCol>
@@ -180,7 +176,7 @@ const changeAvatar = (file: Event) => {
             <DateTimePickField
                 label="End Date"
                 v-model="localFormData.endTime"
-                :error-messages="v$.name.$errors.map((e: any) => e.$message)"
+                :error-messages="v$.endTime.$errors.map((e: any) => e.$message)"
             ></DateTimePickField>
           </VCol>
           <VCol cols="12" sm="6">
