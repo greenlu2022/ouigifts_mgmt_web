@@ -12,7 +12,7 @@ const categories = categoryStore.categories.map(item => {
   return {title: item.name, value: item.id}
 })
 
-const initialData: CouponType = {
+const initialData = {
   imageUrl: "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
   name: "",
   code: "",
@@ -29,7 +29,7 @@ const dialog = ref<boolean>(false)
 
 const refInputEl = ref<HTMLElement>()
 
-const localFormData = reactive<CouponType>({...initialData})
+const localFormData = reactive({...initialData})
 
 const rules = {
   imageUrl: {

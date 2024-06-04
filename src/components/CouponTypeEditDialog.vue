@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import {ref} from 'vue'
+import {reactive, ref} from 'vue'
 import CouponType from "@/types/CouponType.ts";
 import DateTimePickField from "@/components/DateTimePickField.vue";
 import {useCategoryStore} from "@/stores/category.ts";
+import {required, url} from "@vuelidate/validators";
+import {endDateAfterStartDate} from "@/validators/formValidators.ts";
+import {useVuelidate} from "@vuelidate/core";
 
 const categoryStore = useCategoryStore()
 const categories = categoryStore.categories.map(item => {
@@ -17,17 +20,59 @@ const emit = defineEmits<{
   (e: '@confirm', couponType: CouponType): void,
 }>()
 
+const localFormData = reactive<CouponType>({
+  id: outerProps.couponType.id ? outerProps.couponType.id : 0,
+  imageUrl: outerProps.couponType.imageUrl ? outerProps.couponType.imageUrl : "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
+  name: outerProps.couponType.name ? outerProps.couponType.name : "",
+  code: outerProps.couponType.code ? outerProps.couponType.code : "",
+  categoryIds: outerProps.couponType.categoryIds ? outerProps.couponType.categoryIds : [],
+  startTime: outerProps.couponType.startTime ? outerProps.couponType.startTime : "",
+  endTime: outerProps.couponType.endTime ? outerProps.couponType.endTime : "",
+  isLimited: outerProps.couponType.isLimited ? outerProps.couponType.isLimited : false,
+  availableAmount: outerProps.couponType.availableAmount ? outerProps.couponType.availableAmount : 0,
+  isEnabled: outerProps.couponType.isEnabled ? outerProps.couponType.isEnabled : false,
+})
+
 const dialog = ref(false)
-const valid = ref<boolean>(false)
 const refInputEl = ref<HTMLElement>()
-const errorMessage = ref<string>("")
 
-const dataLocal = ref<CouponType>({...outerProps.couponType})
+const rules = {
+  imageUrl: {
+    required,
+    url
+  },
+  name: {
+    required
+  },
+  code: {
+    required
+  },
+  categoryIds: {
+    required
+  },
+  endTime: {
+    endDateAfterStartDate
+  }
+};
 
-const handleConfirm = () => {
-  emit("@confirm", dataLocal.value)
-  dialog.value = false
+const v$ = useVuelidate<CouponType>(rules, localFormData);
+
+const handleSubmit = async () => {
+  const isFormCorrect = await v$.value.$validate();
+  if (isFormCorrect) {
+    emit("@confirm", {...localFormData});
+    dialog.value = false;
+    v$.value.$reset();
+  } else {
+    return
+  }
+};
+
+const handleDismiss = () => {
+  dialog.value = false;
+  v$.value.$reset();
 }
+
 
 const changeAvatar = (file: Event) => {
   const fileReader = new FileReader()
@@ -37,7 +82,7 @@ const changeAvatar = (file: Event) => {
     fileReader.readAsDataURL(files[0])
     fileReader.onload = () => {
       if (typeof fileReader.result === 'string') {
-        dataLocal.value.imageUrl = fileReader.result
+        Object.assign(localFormData, {imageUrl: fileReader.result})
       }
     }
   }
@@ -60,13 +105,13 @@ const changeAvatar = (file: Event) => {
       <VCardTitle class="text-h5">
         Edit Main Coupon Type
       </VCardTitle>
-      <VForm v-model="valid" validate-on="submit lazy" @submit.prevent>
+      <VForm validate-on="submit lazy" @submit.prevent>
         <VRow class="pa-3">
           <VCol cols="12" sm="3" class="px-3">
             <VAvatar
                 rounded="lg"
                 size="120"
-                :image="dataLocal.imageUrl"
+                :image="localFormData.imageUrl"
             />
           </VCol>
           <VCol cols="12" sm="9" class="px-3">
@@ -94,7 +139,8 @@ const changeAvatar = (file: Event) => {
                 ref="name"
                 label="Name*"
                 variant="outlined"
-                v-model="dataLocal.name"
+                v-model="localFormData.name"
+                :error-messages="v$.name.$errors.map((e: any) => e.$message)"
                 required
             ></VTextField>
           </VCol>
@@ -103,8 +149,8 @@ const changeAvatar = (file: Event) => {
                 ref="code"
                 label="Code*"
                 variant="outlined"
-                v-model="dataLocal.code"
-                :rules="[() => !!dataLocal.code || 'This field is required']"
+                v-model="localFormData.code"
+                :error-messages="v$.name.$errors.map((e: any) => e.$message)"
                 required
             ></VTextField>
           </VCol>
@@ -115,8 +161,8 @@ const changeAvatar = (file: Event) => {
                 variant="outlined"
                 multiple
                 chips
-                v-model="dataLocal.categoryIds"
-                :rules="[() => !!dataLocal.categoryIds?.length || 'This field is required']"
+                v-model="localFormData.categoryIds"
+                :error-messages="v$.name.$errors.map((e: any) => e.$message)"
                 required
             ></v-select>
           </VCol>
@@ -126,33 +172,35 @@ const changeAvatar = (file: Event) => {
           </VCol> -->
 
           <VCol cols="12" sm="6">
-            <DateTimePickField label="Start Date" v-model="dataLocal.startTime"></DateTimePickField>
+            <DateTimePickField
+                label="Start Date"
+                v-model="localFormData.startTime"></DateTimePickField>
           </VCol>
           <VCol cols="12" sm="6">
-            <DateTimePickField label="End Date" v-model="dataLocal.endTime"></DateTimePickField>
+            <DateTimePickField
+                label="End Date"
+                v-model="localFormData.endTime"
+                :error-messages="v$.name.$errors.map((e: any) => e.$message)"
+            ></DateTimePickField>
           </VCol>
           <VCol cols="12" sm="6">
-            <VCheckbox v-model="dataLocal.isLimited" label="Limited"></VCheckbox>
+            <VCheckbox v-model="localFormData.isLimited" label="Limited"></VCheckbox>
           </VCol>
           <VCol cols="12" sm="6">
             <VTextField
                 label="Available Amount"
                 variant="outlined"
-                v-model="dataLocal.availableAmount"
+                v-model="localFormData.availableAmount"
                 single-line
                 type="number"
-                :disabled="!dataLocal.isLimited"
-                :required="dataLocal.isLimited"
+                :disabled="!localFormData.isLimited"
+                :required="localFormData.isLimited"
             ></VTextField>
           </VCol>
 
           <VCol cols="12" sm="6">
-            <VSwitch class="w-50" v-model="dataLocal.isEnabled"
-                     :label="dataLocal.isEnabled? 'Activated': 'Disabled'"></VSwitch>
-          </VCol>
-
-          <VCol cols="12" v-if="errorMessage.length>0">
-            <div class="text-red text-center">{{ errorMessage }}</div>
+            <VSwitch class="w-50" v-model="localFormData.isEnabled"
+                     :label="localFormData.isEnabled? 'Activated': 'Disabled'"></VSwitch>
           </VCol>
         </VRow>
         <VCardActions>
@@ -160,14 +208,14 @@ const changeAvatar = (file: Event) => {
           <VBtn
               color="red"
               variant="text"
-              @click="dialog = false"
+              @click="handleDismiss"
           >
             Dismiss
           </VBtn>
           <VBtn
               type="submit"
               color="green-darken-1"
-              @click="handleConfirm"
+              @click="handleSubmit"
           >
             Save
           </VBtn>
