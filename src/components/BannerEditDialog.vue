@@ -63,6 +63,11 @@ const handleSubmit = async () => {
   }
 };
 
+const handleDismiss = () => {
+  dialog.value = false;
+  v$.value.$reset();
+}
+
 
 // changeAvatar function
 const changeAvatar = (file: Event) => {
@@ -166,7 +171,7 @@ const changeAvatar = (file: Event) => {
         <VBtn
             color="red"
             variant="text"
-            @click="dialog = false"
+            @click="handleDismiss"
         >
           Dismiss
         </VBtn>

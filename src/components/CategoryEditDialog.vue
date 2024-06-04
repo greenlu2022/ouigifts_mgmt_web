@@ -17,7 +17,6 @@ const emit = defineEmits<{
 const dialog = ref(false)
 const refInputEl = ref<HTMLElement>()
 
-// const dataLocal = ref<Category>({...outerProps.category})
 const localFormData = reactive({
   id: outerProps.category.id ? outerProps.category.id : 0,
   imageUrl: outerProps.category.imageUrl ? outerProps.category.imageUrl : "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
@@ -62,6 +61,11 @@ const handleSubmit = async () => {
     return
   }
 };
+
+const handleDismiss = () => {
+  dialog.value = false;
+  v$.value.$reset();
+}
 
 </script>
 
@@ -124,7 +128,7 @@ const handleSubmit = async () => {
         <VBtn
             color="red"
             variant="text"
-            @click="dialog = false"
+            @click="handleDismiss"
         >
           Dismiss
         </VBtn>
