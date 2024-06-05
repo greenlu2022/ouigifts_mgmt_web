@@ -155,7 +155,6 @@ const handleDismiss = () => {
                 :disabled="!localFormData.isLimited"
             ></VTextField>
           </VCol>
-
           <VCol cols="12" sm="6">
             <VSwitch class="w-50" v-model="localFormData.isEnabled"
                      :label="localFormData.isEnabled? 'Activated': 'Disabled'"></VSwitch>

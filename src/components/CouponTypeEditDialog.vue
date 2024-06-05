@@ -123,11 +123,6 @@ const handleDismiss = () => {
                 required
             ></v-select>
           </VCol>
-
-          <!-- <VCol cols="12" sm="6">
-
-          </VCol> -->
-
           <VCol cols="12" sm="6">
             <DateTimePickField
                 label="Start Date"
