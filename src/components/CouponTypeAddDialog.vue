@@ -3,9 +3,11 @@ import {reactive, ref} from "vue";
 import DateTimePickField from "@/components/DateTimePickField.vue";
 import CouponType from "@/types/CouponType.ts";
 import {useCategoryStore} from "@/stores/category";
-import {required, url} from "@vuelidate/validators";
+import {required} from "@vuelidate/validators";
 import {endDateAfterStartDate} from "@/validators/formValidators.ts";
 import {useVuelidate} from "@vuelidate/core";
+import ImageUploader from "@/components/ImageUploader.vue";
+
 
 const categoryStore = useCategoryStore()
 const categories = categoryStore.categories.map(item => {
@@ -26,15 +28,11 @@ const initialData = {
 
 
 const dialog = ref<boolean>(false)
-
-const refInputEl = ref<HTMLElement>()
-
 const localFormData = reactive({...initialData})
 
 const rules = {
   imageUrl: {
     required,
-    url
   },
   name: {
     required
@@ -74,20 +72,6 @@ const handleDismiss = () => {
   Object.assign(localFormData, {...initialData})
   v$.value.$reset();
 }
-
-const changeAvatar = (file: Event) => {
-  const fileReader = new FileReader()
-  const {files} = file.target as HTMLInputElement
-
-  if (files && files.length) {
-    fileReader.readAsDataURL(files[0])
-    fileReader.onload = () => {
-      if (typeof fileReader.result === 'string') {
-        Object.assign(localFormData, {imageUrl: fileReader.result})
-      }
-    }
-  }
-}
 </script>
 
 <template>
@@ -111,32 +95,8 @@ const changeAvatar = (file: Event) => {
       </VCardTitle>
       <VForm validate-on="submit lazy" @submit.prevent>
         <VRow class="pa-3">
-          <VCol cols="12" sm="3" class="px-3">
-            <VAvatar
-                rounded="lg"
-                size="120"
-                :image="localFormData.imageUrl"
-            />
-          </VCol>
-          <VCol cols="12" sm="9" class="px-3">
-            <VBtn
-                color="primary"
-                @click="refInputEl?.click()"
-            >
-              <span class="d-none d-sm-block">Upload Image</span>
-            </VBtn>
-            <input
-                ref="refInputEl"
-                type="file"
-                name="file"
-                accept=".jpeg,.png,.jpg,GIF,.webp,.svg"
-                hidden
-                @input="changeAvatar"
-            >
-            <VSpacer></VSpacer>
-            <div class="text-body-1 mt-3">
-              Allowed JPG, GIF, PNG, SVG or WEBP . Max size of 800K
-            </div>
+          <VCol cols="12">
+            <ImageUploader v-model="localFormData.imageUrl"></ImageUploader>
           </VCol>
           <VCol cols="12" sm="6">
             <VTextField
