@@ -26,9 +26,19 @@ const router = createRouter({
                     {
                         path: 'coupon',
                         component: () => import('@/pages/Coupon.vue'),
-                    }
+                    },
                 ],
             },
+            {
+                path: '/login',
+                component: () => import('@/layout/blank.vue'),
+                children: [
+                    {
+                        path: '',
+                        component: () => import('@/pages/Login.vue'),
+                    }
+                ]
+            }
         ]
     }
 )

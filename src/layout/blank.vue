@@ -1,11 +1,9 @@
 <template>
-  <div class="layout-wrapper layout-blank">
+  <div class="d-flex justify-center align-center">
     <RouterView/>
   </div>
 </template>
 
 <style scoped>
-.layout-wrapper.layout-blank {
-  flex-direction: column;
-}
+
 </style>

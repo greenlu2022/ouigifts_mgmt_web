@@ -30,6 +30,14 @@ import logo from '../../assets/logo_light.svg?raw'
       </VListItem>
       <!--      <VListItem prepend-icon="mdi-pen" title="Settings" value="settings" router to="/settings"></VListItem>-->
     </VList>
+
+    <template v-slot:append>
+      <div class="pa-2">
+        <VBtn block router to="/login">
+          Logout
+        </VBtn>
+      </div>
+    </template>
   </VNavigationDrawer>
 
 </template>
