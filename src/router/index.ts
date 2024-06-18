@@ -1,4 +1,5 @@
 import {createRouter, createWebHistory} from 'vue-router'
+import {isLoginAuthenticated} from "@/helpers/authenticate.ts";
 
 const router = createRouter({
         history: createWebHistory(import.meta.env.BASE_URL),
@@ -6,6 +7,7 @@ const router = createRouter({
             {
                 path: '/',
                 component: () => import('@/layout/default.vue'),
+                meta: {requiresAuth: true},
                 children: [
                     {
                         path: 'dashboard',
@@ -18,6 +20,7 @@ const router = createRouter({
                     {
                         path: 'account',
                         component: () => import('@/pages/Account.vue'),
+
                     },
                     {
                         path: 'category',
@@ -42,5 +45,23 @@ const router = createRouter({
         ]
     }
 )
+
+router.beforeEach(function (to, _, next) {
+    const isAuthenticated = isLoginAuthenticated() // get isAuthenticated from cookie or local storage
+
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        // Route requires authentication
+        if (isAuthenticated) {
+            // User is authenticated, proceed to the route
+            next()
+        } else {
+            // User is not authenticated, redirect to login page
+            next('/login')
+        }
+    } else {
+        // Route does not require authentication
+        next()
+    }
+})
 
 export default router

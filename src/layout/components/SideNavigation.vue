@@ -1,5 +1,17 @@
 <script setup lang="ts">
 import logo from '../../assets/logo_light.svg?raw'
+import {useUserStore} from "@/stores/user.ts";
+import {clearToken} from "@/helpers/authenticate.ts";
+import {useRouter} from "vue-router";
+
+const store = useUserStore()
+const router = useRouter()
+
+const onLogout = () => {
+  store.logout()
+  clearToken()
+  router.push('/login')
+}
 </script>
 
 <template>
@@ -33,7 +45,7 @@ import logo from '../../assets/logo_light.svg?raw'
 
     <template v-slot:append>
       <div class="pa-2">
-        <VBtn block router to="/login">
+        <VBtn block @click="onLogout">
           Logout
         </VBtn>
       </div>
