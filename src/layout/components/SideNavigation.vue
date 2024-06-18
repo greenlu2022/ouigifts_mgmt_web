@@ -7,7 +7,7 @@ import {useRouter} from "vue-router";
 const store = useUserStore()
 const router = useRouter()
 
-const onLogout = () => {
+const handleLogout = () => {
   store.logout()
   clearToken()
   router.push('/login')
@@ -45,7 +45,7 @@ const onLogout = () => {
 
     <template v-slot:append>
       <div class="pa-2">
-        <VBtn block @click="onLogout">
+        <VBtn block @click="handleLogout">
           Logout
         </VBtn>
       </div>
