@@ -2,7 +2,7 @@
   "name": "ouigifts_mgmt_web",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
