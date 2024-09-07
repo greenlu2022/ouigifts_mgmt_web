@@ -9,6 +9,7 @@ import CouponTypeEditDialog from "@/components/CouponTypeEditDialog.vue";
 import MoreActionMenu from "@/components/MoreActionMenu.vue";
 import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";
 import {useCategoryStore} from "@/stores/category.ts";
+import SubCouponsDialog from "@/components/SubCouponsDialog.vue";
 
 const store = useMainCouponStore()
 store.getMainCoupons()
@@ -47,6 +48,7 @@ const headers = [
   {key: 'availableAmount', title: 'Available Amount', align: 'center',},
   {key: 'startTime', title: 'Start Time', align: 'center',},
   {key: 'endTime', title: 'End Time', align: 'center',},
+  {key: 'subCoupons', title: 'Sub Coupons', align: 'center',},
   {key: 'isEnabled', title: 'Active', align: 'center',},
   {key: 'more', title: 'More', align: 'center', width: '100px'}
 ]
@@ -115,6 +117,10 @@ const headers = [
         <div v-if="!item.isLimited" class="text-center">
           <VIcon icon="mdi-all-inclusive"></VIcon> &nbsp;
         </div>
+      </template>
+
+      <template v-slot:item.subCoupons="{ item }">
+        <SubCouponsDialog :couponTypeId="item.id"/>
       </template>
 
       <template v-slot:item.isEnabled="{ item }">
