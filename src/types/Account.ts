@@ -3,6 +3,7 @@ import type {ID} from "@/types/utilsType.ts";
 
 export default interface Account {
     id?: ID,
+    imageUrl: string,
     account: string,
     name: string,
     password: string,
@@ -17,4 +18,5 @@ export default interface Account {
     lastLoginTime: string,
     sessionToken: string,
     isPhoneVerified: boolean,
+    isEnabled: boolean,
 }

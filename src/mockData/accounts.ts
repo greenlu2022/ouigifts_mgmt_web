@@ -3,6 +3,7 @@ import Account from "@/types/Account.ts";
 const accounts: Account[] = [
     {
         id: 1,
+        imageUrl: "",
         account: "admin",
         name: "admin",
         password: "admin",
@@ -17,9 +18,11 @@ const accounts: Account[] = [
         lastLoginTime: "2024-01-01",
         sessionToken: "mlkfgjkflghfnflkgnlkfgn",
         isPhoneVerified: true,
+        isEnabled: true,
     },
     {
         id: 2,
+        imageUrl: "",
         account: "user",
         name: "user",
         password: "user",
@@ -34,9 +37,11 @@ const accounts: Account[] = [
         lastLoginTime: "2024-01-01",
         sessionToken: "mlkfgjkflghfnflkgnlkfgn",
         isPhoneVerified: true,
+        isEnabled: true,
     },
     {
         id: 3,
+        imageUrl: "",
         account: "test",
         name: "test",
         password: "test",
@@ -51,6 +56,7 @@ const accounts: Account[] = [
         lastLoginTime: "2024-01-01",
         sessionToken: "mlkfgjkflghfnflkgnlkfgn",
         isPhoneVerified: true,
+        isEnabled: true,
     }
 ]
 
