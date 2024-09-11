@@ -1,5 +1,7 @@
+import type {ID} from "@/types/utilsType.ts";
+
 export default interface CouponType {
-    id?: number,
+    id?: ID,
     categoryIds: number[],
     name: string,
     code: string,

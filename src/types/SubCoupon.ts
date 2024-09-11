@@ -1,5 +1,7 @@
+import type {ID} from "@/types/utilsType.ts";
+
 export default interface SubCoupon {
-    id?: string,
+    id?: ID,
     couponTypeId?: string,
     couponCode?: string,
     collectedBy?: string,

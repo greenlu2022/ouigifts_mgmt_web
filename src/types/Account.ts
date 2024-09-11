@@ -1,19 +1,20 @@
+import SubCoupon from "@/types/SubCoupon.ts";
+import type {ID} from "@/types/utilsType.ts";
+
 export default interface Account {
-    id?: number,
+    id?: ID,
     account: string,
-    firstName: string,
-    lastName: string,
+    name: string,
     password: string,
     email: string,
     phone: string,
     nationality: string,
-    address: string,
     birthday: string,
-    memberType: string,
-    memberLevel: string,
+    membership: string,
     memberPoints: number,
-    memberStatus: string,
-    lastLoginLime: string,
+    collections: SubCoupon[],
+    status: string,
+    lastLoginTime: string,
     sessionToken: string,
     isPhoneVerified: boolean,
 }
