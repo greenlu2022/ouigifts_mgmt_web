@@ -23,3 +23,5 @@ const mainCoupons: CouponType[] = [{
     imageUrl: "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
     isEnabled: true,
 }]
+
+export default mainCoupons;

@@ -2,7 +2,7 @@
 
 import {ref} from 'vue'
 import SubCoupon from '@/types/SubCoupon'
-import subCoupons from "@/data/subCoupons";
+import subCoupons from "@/mockData/subCoupons";
 
 const dialog = ref(false)
 

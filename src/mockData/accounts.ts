@@ -1,0 +1,57 @@
+import Account from "@/types/Account.ts";
+
+const accounts: Account[] = [
+    {
+        id: 1,
+        account: "admin",
+        name: "admin",
+        password: "admin",
+        email: "",
+        phone: "+886-987654321",
+        nationality: "Taiwan",
+        birthday: "2021-01-01",
+        membership: "Gold",
+        memberPoints: 100,
+        collections: [],
+        status: "active",
+        lastLoginTime: "2024-01-01",
+        sessionToken: "mlkfgjkflghfnflkgnlkfgn",
+        isPhoneVerified: true,
+    },
+    {
+        id: 2,
+        account: "user",
+        name: "user",
+        password: "user",
+        email: "",
+        phone: "+886-987654321",
+        nationality: "Taiwan",
+        birthday: "2021-01-01",
+        membership: "Gold",
+        memberPoints: 100,
+        collections: [],
+        status: "active",
+        lastLoginTime: "2024-01-01",
+        sessionToken: "mlkfgjkflghfnflkgnlkfgn",
+        isPhoneVerified: true,
+    },
+    {
+        id: 3,
+        account: "test",
+        name: "test",
+        password: "test",
+        email: "",
+        phone: "+886-987654321",
+        nationality: "Taiwan",
+        birthday: "2021-01-01",
+        membership: "Gold",
+        memberPoints: 100,
+        collections: [],
+        status: "active",
+        lastLoginTime: "2024-01-01",
+        sessionToken: "mlkfgjkflghfnflkgnlkfgn",
+        isPhoneVerified: true,
+    }
+]
+
+export default accounts;
