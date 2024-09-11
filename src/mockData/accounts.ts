@@ -4,7 +4,7 @@ const accounts: Account[] = [
     {
         id: 1,
         imageUrl: "",
-        account: "admin",
+        accountId: "admin",
         name: "admin",
         password: "admin",
         email: "",
@@ -23,7 +23,7 @@ const accounts: Account[] = [
     {
         id: 2,
         imageUrl: "",
-        account: "user",
+        accountId: "user",
         name: "user",
         password: "user",
         email: "",
@@ -42,7 +42,7 @@ const accounts: Account[] = [
     {
         id: 3,
         imageUrl: "",
-        account: "test",
+        accountId: "test",
         name: "test",
         password: "test",
         email: "",

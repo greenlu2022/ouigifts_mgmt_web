@@ -4,7 +4,7 @@ import type {ID} from "@/types/utilsType.ts";
 export default interface Account {
     id?: ID,
     imageUrl: string,
-    account: string,
+    accountId: string,
     name: string,
     password: string,
     email: string,
