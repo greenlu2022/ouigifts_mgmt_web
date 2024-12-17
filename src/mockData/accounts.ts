@@ -22,7 +22,11 @@ const accounts: Account[] = [
     },
     {
         id: 2,
+<<<<<<< HEAD
         imageUrl: "",
+=======
+        imageUrl: "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
+>>>>>>> 772b524 (init)
         accountId: "user",
         name: "user",
         password: "user",
@@ -41,7 +45,11 @@ const accounts: Account[] = [
     },
     {
         id: 3,
+<<<<<<< HEAD
         imageUrl: "",
+=======
+        imageUrl: "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
+>>>>>>> 772b524 (init)
         accountId: "test",
         name: "test",
         password: "test",

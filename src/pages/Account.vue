@@ -49,6 +49,7 @@ const handleEditConfirm = (account: Account) => {
       </VCardTitle>
       <VDivider></VDivider>
 
+<<<<<<< HEAD
       <VDataTable v-model:search="search" :items="store.accounts" :headers="( headers as any)" height="780px"
                   class="rounded-lg"
                   fixed-header>
@@ -63,6 +64,34 @@ const handleEditConfirm = (account: Account) => {
                 :src="item.imageUrl"
                 :class="{ grayscale: !item.isEnabled }"
             ></VImg>
+=======
+      <VDataTable v-model:search="search"
+                  :items="store.accounts"
+                  :headers="( headers as any)"
+                  height="780px"
+                  class="rounded-lg"
+                  fixed-header>
+        <template v-slot:item.imageUrl="{ item }">
+          <VCard class="my-4" elevation="2" rounded>
+            <VImg
+                :width="160"
+                aspect-ratio="1/1"
+                class="ma-auto"
+                cover
+                lazy-src="https://picsum.photos/id/11/100/60"
+                :src="item.imageUrl"
+                :class="{ grayscale: !item.isEnabled }"
+            >
+              <template v-slot:placeholder>
+                <div class="d-flex align-center justify-center fill-height">
+                  <v-progress-circular
+                      color="grey-lighten-4"
+                      indeterminate
+                  ></v-progress-circular>
+                </div>
+              </template>
+            </VImg>
+>>>>>>> 772b524 (init)
           </VCard>
         </template>
         <template v-slot:item.isEnabled="{ item }">
