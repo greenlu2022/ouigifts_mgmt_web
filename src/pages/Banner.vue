@@ -6,6 +6,7 @@ import BannerEditDialog from "@/components/BannerEditDialog.vue";
 import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";
 import MoreActionMenu from "@/components/MoreActionMenu.vue";
 import {ref} from "vue";
+import type {ID} from "@/types/utilsType.ts";
 
 const store = useBannerStore()
 store.getBanners()
@@ -22,7 +23,7 @@ const handleAddConfirm = (banner: Banner) => {
   store.addUnshift(banner)
 }
 
-const handleDeleteConfirm = (bannerId: number) => {
+const handleDeleteConfirm = (bannerId: ID) => {
   console.log("delete emitted", bannerId)
   store.remove(bannerId)
 }

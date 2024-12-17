@@ -1,5 +1,6 @@
 import {defineStore} from "pinia";
 import CouponType from "@/types/CouponType.ts";
+import type {ID} from "@/types/utilsType.ts";
 
 export const useMainCouponStore = defineStore('mainCoupon', {
     state: (): {
@@ -14,11 +15,7 @@ export const useMainCouponStore = defineStore('mainCoupon', {
                 name: "Apple",
                 code: "APPLE_202403",
                 isLimited: true,
-                discountType: 1,
-                discountPercentage: 20,
-                availableArea: [],
                 availableAmount: 1000,
-                restriction: [],
                 startTime: '2023-12-31 00:00:00',
                 endTime: '2024-12-31 23:59:59',
                 imageUrl: "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
@@ -29,11 +26,7 @@ export const useMainCouponStore = defineStore('mainCoupon', {
                 name: "Google",
                 code: "APPLE_202403",
                 isLimited: true,
-                discountType: 1,
-                discountPercentage: 20,
-                availableArea: [],
                 availableAmount: 1000,
-                restriction: [],
                 startTime: '2023-12-31 00:00:00',
                 endTime: '2024-12-31 23:59:59',
                 imageUrl: "https://cdn.vuetifyjs.com/images/parallax/material.jpg",
@@ -56,7 +49,7 @@ export const useMainCouponStore = defineStore('mainCoupon', {
             const index = this.mainCoupons.findIndex(item => item.id == coupon.id)
             this.mainCoupons.splice(index, 1, coupon)
         },
-        remove(couponTypeId: number): void {
+        remove(couponTypeId: ID): void {
             const index = this.mainCoupons.findIndex(item => item.id == couponTypeId)
             this.mainCoupons.splice(index, 1)
         },

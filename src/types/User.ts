@@ -1,5 +1,7 @@
+import type {ID} from "@/types/utilsType.ts";
+
 export default interface User {
-    id?: number,
+    id?: ID,
     accountId: string,
     firstName: string,
     lastName: string,

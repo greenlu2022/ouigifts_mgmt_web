@@ -1,5 +1,6 @@
 import {defineStore} from 'pinia'
 import type Category from "@/types/Category.ts";
+import type {ID} from "@/types/utilsType.ts";
 
 export const useCategoryStore = defineStore('category', {
     state: (): {
@@ -63,7 +64,7 @@ export const useCategoryStore = defineStore('category', {
             const bannerIndex = this.categories.findIndex(item => item.id == category.id)
             this.categories.splice(bannerIndex, 1, category)
         },
-        remove(categoryId: number): void {
+        remove(categoryId: ID): void {
             const categoryIndex = this.categories.findIndex(item => item.id == categoryId)
             this.categories.splice(categoryIndex, 1)
         },

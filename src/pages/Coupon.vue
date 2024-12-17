@@ -10,6 +10,7 @@ import MoreActionMenu from "@/components/MoreActionMenu.vue";
 import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";
 import {useCategoryStore} from "@/stores/category.ts";
 import SubCouponsDialog from "@/components/SubCouponsDialog.vue";
+import type {ID} from "@/types/utilsType.ts";
 
 const store = useMainCouponStore()
 store.getMainCoupons()
@@ -19,7 +20,7 @@ categoryStore.getCategories()
 
 const search = ref<string>("")
 
-const getCategoryNameById = (id: number): string => {
+const getCategoryNameById = (id: ID): string => {
   const category = categoryStore.categories.find(item => item.id == id)
   return <string>category?.name
 }
@@ -28,7 +29,7 @@ const handleEditConfirm = (couponType: CouponType) => {
   store.update(couponType)
 }
 
-const handleDeleteConfirm = (couponTypeId: number) => {
+const handleDeleteConfirm = (couponTypeId: ID) => {
   store.remove(couponTypeId)
 }
 

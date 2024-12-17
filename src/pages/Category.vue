@@ -6,6 +6,7 @@ import MoreActionMenu from "@/components/MoreActionMenu.vue";
 import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";
 import CategoryAddDialog from "@/components/CategoryAddDialog.vue";
 import CategoryEditDialog from "@/components/CategoryEditDialog.vue";
+import type {ID} from "@/types/utilsType.ts";
 
 const store = useCategoryStore()
 store.getCategories()
@@ -16,7 +17,7 @@ const handleEditConfirm = (category: Category) => {
   store.update(category)
 }
 
-const handleDeleteConfirm = (categoryId: number) => {
+const handleDeleteConfirm = (categoryId: ID) => {
   store.remove(categoryId)
 }
 
