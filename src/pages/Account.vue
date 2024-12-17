@@ -8,8 +8,8 @@ const store = useAccountStore()
 store.getAccounts()
 
 const headers = [
-  {key: 'userImage', title: 'UserImage', align: 'center', fixed: true, width: '240px'},
-  {key: 'account', title: 'Account', align: 'center'},
+  {key: 'imageUrl', title: 'imageUrl', align: 'center', fixed: true, width: '240px'},
+  {key: 'accountId', title: 'accountId', align: 'center'},
   {key: 'name', title: 'Name', align: 'center'},
   {key: 'email', title: 'Email', align: 'center'},
   {key: 'phone', title: 'Phone', align: 'center'},
@@ -49,22 +49,6 @@ const handleEditConfirm = (account: Account) => {
       </VCardTitle>
       <VDivider></VDivider>
 
-<<<<<<< HEAD
-      <VDataTable v-model:search="search" :items="store.accounts" :headers="( headers as any)" height="780px"
-                  class="rounded-lg"
-                  fixed-header>
-
-        <template v-slot:item.imageUrl="{ item }">
-          <VCard class="my-4" elevation="2" rounded>
-            <VImg
-                :width="240"
-                aspect-ratio="4/3"
-                class="ma-auto"
-                cover
-                :src="item.imageUrl"
-                :class="{ grayscale: !item.isEnabled }"
-            ></VImg>
-=======
       <VDataTable v-model:search="search"
                   :items="store.accounts"
                   :headers="( headers as any)"
@@ -91,7 +75,6 @@ const handleEditConfirm = (account: Account) => {
                 </div>
               </template>
             </VImg>
->>>>>>> 772b524 (init)
           </VCard>
         </template>
         <template v-slot:item.isEnabled="{ item }">
