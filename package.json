@@ -1,7 +1,7 @@
 {
   "name": "ouigifts_mgmt_webiste",
-  "private": true,
-  "version": "0.0.0",
+  "private": false,
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -18,7 +18,7 @@
     "luxon": "^3.4.4",
     "pinia": "^2.1.6",
     "vite-plugin-eslint": "^1.8.1",
-    "vite-plugin-vuetify": "^1.0.2",
+    "vite-plugin-vuetify": "^2.0.4",
     "vue": "^3.4.15",
     "vue-material-time-picker": "^0.0.8",
     "vue-router": "4",
